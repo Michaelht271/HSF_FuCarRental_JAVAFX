@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}">
+<head>
+    <title>Báo cáo thống kê</title>
+    <th:block th:with="pageTitle='Báo cáo thống kê', activeMenu='reports'"></th:block>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container-fluid">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="h3 mb-0">Báo cáo thống kê</h2>
+                <p class="text-muted">Tạo báo cáo giao dịch thuê xe theo thời gian</p>
+            </div>
+        </div>
+
+        <!-- Report Generation Form -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-line me-2"></i>Tạo báo cáo
+                </h5>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/admin/reports/generate}" method="post" class="row g-3">
+                    <div class="col-md-4">
+                        <label for="startDate" class="form-label">Từ ngày *</label>
+                        <input type="date" class="form-control" id="startDate" name="startDate" 
+                               th:value="${param.startDate}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="endDate" class="form-label">Đến ngày *</label>
+                        <input type="date" class="form-control" id="endDate" name="endDate" 
+                               th:value="${param.endDate}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="reportType" class="form-label">Loại báo cáo</label>
+                        <select class="form-select" id="reportType" name="reportType">
+                            <option value="summary">Tổng quan</option>
+                            <option value="detailed">Chi tiết</option>
+                            <option value="revenue">Doanh thu</option>
+                            <option value="customer">Theo khách hàng</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <div class="btn-group" role="group">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-chart-bar me-2"></i>Tạo báo cáo
+                            </button>
+                            <button type="button" class="btn btn-success" onclick="exportToExcel('/admin/reports/export')">
+                                <i class="fas fa-file-excel me-2"></i>Xuất Excel
+                            </button>
+                            <button type="button" class="btn btn-danger" onclick="exportToPDF('/admin/reports/export')">
+                                <i class="fas fa-file-pdf me-2"></i>Xuất PDF
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Statistics Overview -->
+        <div class="row mb-4">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card bg-primary text-white shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                    Tổng giao dịch
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold" th:text="${reportData != null ? reportData.totalTransactions : '0'}">156</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-file-contract fa-2x text-white-50"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card bg-success text-white shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                    Tổng doanh thu
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold" th:text="${reportData != null ? #numbers.formatCurrency(reportData.totalRevenue) : '₫0'}">₫45.2M</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-white-50"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card bg-info text-white shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                    Tỷ lệ hoàn thành
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold" th:text="${reportData != null ? reportData.completionRate + '%' : '0%'}">89%</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-percentage fa-2x text-white-50"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card bg-warning text-white shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                    Xe được thuê nhiều nhất
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold" th:text="${reportData != null ? reportData.mostRentedCar : 'N/A'}">Toyota Camry</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-car fa-2x text-white-50"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report Results -->
+        <div th:if="${reportResults != null and !reportResults.empty}" class="card shadow">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    Kết quả báo cáo từ <span th:text="${#temporals.format(startDate, 'dd/MM/yyyy')}"></span> 
+                    đến <span th:text="${#temporals.format(endDate, 'dd/MM/yyyy')}"></span>
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Ngày</th>
+                                <th>Khách hàng</th>
+                                <th>Xe</th>
+                                <th>Ngày thuê</th>
+                                <th>Ngày trả</th>
+                                <th>Số ngày</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="result : ${reportResults}">
+                                <td th:text="${#temporals.format(result.createdDate, 'dd/MM/yyyy')}">01/01/2024</td>
+                                <td th:text="${result.customer.customerName}">Nguyễn Văn A</td>
+                                <td th:text="${result.car.carName}">Toyota Camry</td>
+                                <td th:text="${#temporals.format(result.pickupDate, 'dd/MM/yyyy')}">01/01/2024</td>
+                                <td th:text="${#temporals.format(result.returnDate, 'dd/MM/yyyy')}">05/01/2024</td>
+                                <td th:text="${result.totalDays}">4</td>
+                                <td class="text-success font-weight-bold" th:text="${#numbers.formatCurrency(result.rentPrice)}">₫3,200,000</td>
+                                <td>
+                                    <span th:class="'badge bg-' + (${result.status == 'COMPLETED'} ? 'success' : (${result.status == 'ACTIVE'} ? 'primary' : 'warning'))"
+                                          th:text="${result.status == 'COMPLETED' ? 'Hoàn thành' : (result.status == 'ACTIVE' ? 'Đang thuê' : 'Chờ duyệt')}">
+                                        Hoàn thành
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="table-light">
+                            <tr>
+                                <th colspan="6" class="text-end">Tổng cộng:</th>
+                                <th class="text-success" th:text="${#numbers.formatCurrency(totalAmount)}">₫45,200,000</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Data Message -->
+        <div th:if="${reportResults == null or reportResults.empty}" class="card shadow">
+            <div class="card-body text-center py-5">
+                <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">Chưa có dữ liệu báo cáo</h5>
+                <p class="text-muted">Vui lòng chọn khoảng thời gian và tạo báo cáo để xem kết quả</p>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

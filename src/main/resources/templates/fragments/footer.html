@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="customer-footer">
+    <footer class="bg-light border-top mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-1 text-muted">&copy; 2025 FU Car Renting System. All rights reserved.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a th:href="@{/}" class="text-muted small text-decoration-none">Trang chủ</a>
+                <a th:href="@{/cars}" class="text-muted small text-decoration-none">Thuê xe</a>
+                <a th:href="@{/about}" class="text-muted small text-decoration-none">Giới thiệu</a>
+                <a th:href="@{/contact}" class="text-muted small text-decoration-none">Liên hệ</a>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

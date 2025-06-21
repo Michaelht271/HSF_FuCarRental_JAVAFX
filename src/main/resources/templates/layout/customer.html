@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/customer.css}" rel="stylesheet">
+</head>
+<body>
+<header class="bg-white shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+        <!-- Logo / Brand -->
+        <div class="d-flex align-items-center gap-2">
+            <i class="fas fa-car text-danger fa-lg"></i>
+            <h1 class="h5 fw-bold mb-0 text-dark">FU Car Renting System</h1>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="d-flex align-items-center gap-4">
+            <a th:href="@{/}" class="text-dark fw-medium nav-link">Trang chủ</a>
+            <a th:href="@{/api/v1/customer/cars}" class="text-dark fw-medium nav-link">Thuê xe</a>
+            <a th:href="@{/api/v1/customer/orders}" class="text-dark fw-medium nav-link">Đơn thuê</a>
+            <a th:href="@{/api/v1/customer/profile}" class="text-dark fw-medium nav-link">Tài khoản</a>
+
+            <!-- User Dropdown -->
+            <div class="dropdown">
+                <a class="dropdown-toggle text-dark fw-medium" href="#" role="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-user-circle me-1"></i>
+                    <span th:text="${#authentication.name}">Tên người dùng</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" th:href="@{/api/v1/customer/profile}">Thông tin cá nhân</a></li>
+                    <li><a class="dropdown-item" th:href="@{/api/v1/customer/logout}">Đăng xuất</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="main-content pt-5 mt-4">
+    <div layout:fragment="content">
+        <!-- Nội dung riêng của mỗi trang -->
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <h5><i class="fas fa-car text-primary me-2"></i>FU Car Rental</h5>
+                <p class="text-muted">Dịch vụ cho thuê xe hàng đầu Việt Nam với đội ngũ chuyên nghiệp và xe chất lượng cao.</p>
+                <div class="social-links">
+                    <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-light"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 mb-4">
+                <h6>Dịch vụ</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-muted">Thuê xe tự lái</a></li>
+                    <li><a href="#" class="text-muted">Thuê xe có tài xế</a></li>
+                    <li><a href="#" class="text-muted">Thuê xe dài hạn</a></li>
+                    <li><a href="#" class="text-muted">Xe cưới</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 mb-4">
+                <h6>Hỗ trợ</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-muted">Hướng dẫn thuê xe</a></li>
+                    <li><a href="#" class="text-muted">Chính sách</a></li>
+                    <li><a href="#" class="text-muted">Câu hỏi thường gặp</a></li>
+                    <li><a href="#" class="text-muted">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <h6>Liên hệ</h6>
+                <ul class="list-unstyled text-muted">
+                    <li><i class="fas fa-map-marker-alt me-2"></i>123 Đường ABC, Quận XYZ, TP.HCM</li>
+                    <li><i class="fas fa-phone me-2"></i>1900 1234</li>
+                    <li><i class="fas fa-envelope me-2"></i>info@fucarrental.com</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="text-muted mb-0">&copy; 2025 FU Car Rental. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <p class="text-muted mb-0">Thiết kế bởi FU Team</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/customer.js}"></script>
+</body>
+</html>

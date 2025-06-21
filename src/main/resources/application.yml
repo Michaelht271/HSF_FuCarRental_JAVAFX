@@ -1,0 +1,50 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+  port: 9999
+spring:
+  security:
+    user:
+      name: annguyen
+      password: 123456
+  application:
+    name: Assigment-1
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=FUCarRentingSystemDB;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: MichaelAn271
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        format_sql: true
+        connection:
+          useUnicode: true
+          characterEncoding: utf8
+          CharSet: utf8
+    show_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sunstonecraft.store@gmail.com
+    password: eclu rqwh lmwg ebms
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/templates/
+#    suffix: html
+app:
+  verification:
+    base-uri: /api/v1/public/verify
+
+

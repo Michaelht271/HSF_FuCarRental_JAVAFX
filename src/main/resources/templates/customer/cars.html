@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/customer}">
+<head>
+    <title>Danh sách xe cho thuê | FU Car Rental</title>
+    <meta name="description" content="Tìm kiếm và thuê xe ô tô chất lượng cao, giá tốt tại FU Car Rental.">
+    <meta name="keywords" content="thuê xe, ô tô, FU Car Rental, xe tự lái, xe du lịch">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" th:href="@{/css/customer.css}" />
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="page-title">Danh sách xe cho thuê</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">Thuê xe</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <!-- Filters -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <form action="/cars" method="get" class="row g-3" id="filterForm">
+                            <div class="col-md-3">
+                                <label for="pickupDate" class="form-label">Ngày nhận xe</label>
+                                <input type="date" class="form-control" id="pickupDate" name="pickupDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="returnDate" class="form-label">Ngày trả xe</label>
+                                <input type="date" class="form-control" id="returnDate" name="returnDate">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="capacity" class="form-label">Số chỗ</label>
+                                <select class="form-select" id="capacity" name="capacity">
+                                    <option value="">Tất cả</option>
+                                    <option value="4">4 chỗ</option>
+                                    <option value="5">5 chỗ</option>
+                                    <option value="7">7 chỗ</option>
+                                    <option value="9">9 chỗ</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="priceRange" class="form-label">Giá</label>
+                                <select class="form-select" id="priceRange" name="priceRange">
+                                    <option value="">Tất cả</option>
+                                    <option value="0-500000">Dưới 500k</option>
+                                    <option value="500000-1000000">500k - 1M</option>
+                                    <option value="1000000-2000000">1M - 2M</option>
+                                    <option value="2000000-999999999">Trên 2M</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-search me-1"></i>Lọc
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Info -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <p class="text-muted">
+                    Tìm thấy <strong th:text="${cars.size()}">0</strong> xe phù hợp
+                </p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="viewMode" id="gridView" checked>
+                    <label class="btn btn-outline-secondary" for="gridView">
+                        <i class="fas fa-th-large"></i>
+                    </label>
+                    <input type="radio" class="btn-check" name="viewMode" id="listView">
+                    <label class="btn btn-outline-secondary" for="listView">
+                        <i class="fas fa-list"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cars Grid -->
+        <div class="row g-4" id="carsGrid">
+            <div class="col-lg-4 col-md-6" th:each="car : ${cars}">
+                <div class="car-card">
+                    <div class="car-image">
+                        <img th:src="@{'/images/cars/' + ${car.carId} + '.jpg'}"
+                             th:alt="${car.carName}" class="img-fluid"
+                             onerror="this.src='/placeholder.svg?height=200&width=300'">
+                        <div class="car-badge">
+                            <span class="badge"
+                                  th:classappend="${car.status.name() == 'AVAILABLE'} ? 'bg-success' : 'bg-secondary'"
+                                  th:text="${car.status.name() == 'AVAILABLE' ? 'Có sẵn' : 'Không sẵn'}">
+                                Có sẵn
+                            </span>
+                        </div>
+                        <div class="car-actions">
+                            <button class="btn btn-sm btn-light" th:onclick="'addToWishlist(' + ${car.carId} + ')'">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="btn btn-sm btn-light" th:onclick="'shareCard(' + ${car.carId} + ')'">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="car-info">
+                        <h5 class="car-name" th:text="${car.carName}">Tên xe</h5>
+                        <p class="car-details text-muted">
+                            <i class="fas fa-calendar me-1"></i>
+                            <span th:text="${car.carModelYear}">2023</span> •
+                            <i class="fas fa-users me-1"></i>
+                            <span th:text="${car.capacity}">5</span> chỗ •
+                            <i class="fas fa-palette me-1"></i>
+                            <span th:text="${car.color}">Trắng</span>
+                        </p>
+                        <div class="car-features">
+                            <span class="feature-tag"
+                                  th:each="feature : ${#strings.split((car.description == null ? '' : car.description), ',')}"
+
+                                  th:text="${feature}"></span>
+                        </div>
+                        <div class="car-rating">
+                            <div class="stars">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-muted"></i>
+                            </div>
+                            <span class="rating-text text-muted">(4.2 - 15 đánh giá)</span>
+                        </div>
+                        <div class="car-price-action">
+                            <div class="price">
+                                <span class="price-amount"
+                                      th:text="'₫' + ${#numbers.formatDecimal(car.rentPrice, 0, 'COMMA', 0, 'POINT')}">₫0</span>
+                                <span class="price-unit">/ngày</span>
+                            </div>
+                            <div class="action-buttons">
+                                <a th:href="@{'/cars/' + ${car.carId}}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-eye me-1"></i>Chi tiết
+                                </a>
+                                <button class="btn btn-primary btn-sm"
+                                        th:attr="onclick=|bookNow('${car.carId}')|"
+                                        th:disabled="${car.status.name() != 'AVAILABLE'}">
+                                    <i class="fas fa-calendar-plus me-1"></i>Đặt xe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize date inputs
+        const today = new Date().toISOString().split('T')[0];
+        const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+        const pickupDate = document.getElementById('pickupDate');
+        const returnDate = document.getElementById('returnDate');
+
+        if (pickupDate) {
+            pickupDate.min = today;
+        }
+
+        if (returnDate) {
+            returnDate.min = tomorrow;
+        }
+
+        // View mode toggle
+        const gridViewBtn = document.getElementById('gridView');
+        const listViewBtn = document.getElementById('listView');
+        const carsGrid = document.getElementById('carsGrid');
+
+        if (gridViewBtn && listViewBtn && carsGrid) {
+            gridViewBtn.addEventListener('change', function() {
+                if (this.checked) {
+                    carsGrid.className = 'row g-4';
+                    carsGrid.querySelectorAll('.col-12').forEach(function(col) {
+                        col.className = 'col-lg-4 col-md-6';
+                    });
+                }
+            });
+
+            listViewBtn.addEventListener('change', function() {
+                if (this.checked) {
+                    carsGrid.className = 'row g-4';
+                    carsGrid.querySelectorAll('.col-lg-4, .col-md-6').forEach(function(col) {
+                        col.className = 'col-12';
+                    });
+                }
+            });
+        }
+    });
+
+    function addToWishlist(carId) {
+        alert('Đã thêm xe vào danh sách yêu thích!');
+    }
+
+    function shareCard(carId) {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Xe cho thuê',
+                text: 'Xem xe này trên FU Car Rental',
+                url: window.location.origin + '/cars/' + carId
+            });
+        } else {
+            alert('Đã sao chép link!');
+        }
+    }
+
+    function bookNow(carId) {
+        const pickupDate = document.getElementById('pickupDate').value;
+        const returnDate = document.getElementById('returnDate').value;
+
+        if (!pickupDate || !returnDate) {
+            alert('Vui lòng chọn ngày nhận và trả xe!');
+            return;
+        }
+
+        window.location.href = '/cars/' + carId + '?pickupDate=' + pickupDate + '&returnDate=' + returnDate;
+    }
+</script>
+</body>
+</html>

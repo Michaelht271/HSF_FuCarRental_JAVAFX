@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+    <title>Quản lý xe</title>
+    <th:block th:with="pageTitle='Quản lý xe', activeMenu='cars'"></th:block>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+    <div class="container-fluid">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="h3 mb-0">Quản lý xe</h2>
+                <p class="text-muted">Danh sách xe trong hệ thống</p>
+            </div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCarModal">
+                <i class="fas fa-plus me-2"></i>Thêm xe mới
+            </button>
+        </div>
+
+        <!-- Table danh sách xe -->
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên xe</th>
+                            <th>Năm</th>
+                            <th>Màu</th>
+                            <th>Chỗ</th>
+                            <th>Hãng</th>
+                            <th>Giá/ngày</th>
+                            <th>Trạng thái</th>
+                            <th>Actions</th>
+                        </tr>
+                        <tbody>
+                        <tr th:each="car : ${cars}">
+                            <td th:text="${car.carId}">1</td>
+                            <td th:text="${car.carName}">Toyota Camry</td>
+                            <td th:text="${car.carModelYear}">2023</td>
+                            <td th:text="${car.color}">Trắng</td>
+                            <td th:text="${car.capacity}">5</td>
+                            <td th:text="${car.producer.producerName}">Toyota</td>
+                            <td th:text="${car.rentPrice != null ? car.rentPrice + ' ₫' : 'Chưa định giá'}">
+                                800,000 ₫
+                            </td>
+                            <td>
+                               <span th:class="'badge bg-' +
+                                    (${car.status.name()} == 'AVAILABLE' ? 'success' :
+                                    (${car.status.name()} == 'RENTED' ? 'warning' :
+                                    (${car.status.name()} == 'MAINTENANCE' ? 'info' : 'secondary')))"
+
+                                     th:text="${car.status.name() == 'AVAILABLE' ? 'Có sẵn' :
+                                             (car.status.name() == 'RENTED' ? 'Đang thuê' :
+                                             (car.status.name() == 'MAINTENANCE' ? 'Bảo trì' : 'Ngưng hoạt động'))}">
+                                    Trạng thái
+                               </span>
+
+                            </td>
+                            <!-- Add this in the <thead> -->
+
+
+                            <!-- Add this in the <tbody> inside the <tr th:each="car : ${cars}"> -->
+                            <td>
+                                <a href="#" class="btn btn-sm btn-warning me-1"
+                                   th:attr="data-id=${car.carId},
+                                                        data-name=${car.carName},
+                                                        data-year=${car.carModelYear},
+                                                        data-color=${car.color},
+                                                        data-capacity=${car.capacity},
+                                                        data-producer=${car.producer.producerId},
+                                                        data-price=${car.rentPrice},
+                                                        data-date=${car.importDate},
+                                                        data-status=${car.status},
+                                                        data-description=${car.description}"
+                                   onclick="showEditModal(this)">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+
+
+                                <a th:href="@{/api/v1/admin/cars/delete/{carId}(carId=${car.carId})}"
+                                   class="btn btn-sm btn-danger"
+                                   th:onclick="|return confirm('Bạn có chắc chắn muốn xóa xe có ID ${car.carId}?');|">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Thêm xe -->
+        <div class="modal fade" id="addCarModal" tabindex="-1" aria-labelledby="addCarModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form th:action="@{/api/v1/admin/cars/add}" th:object="${car}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addCarModalLabel">Thêm xe mới</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tên xe</label>
+                                <label>
+                                    <input type="text" class="form-control" th:field="*{carName}" required>
+                                </label>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Năm sản xuất</label>
+                                <input type="number" class="form-control" th:field="*{carModelYear}" min="2000"
+                                       max="2025" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Màu sắc</label>
+                                <input type="text" class="form-control" th:field="*{color}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Số chỗ</label>
+                                <select class="form-select" th:field="*{capacity}">
+                                    <option value="">Chọn số chỗ</option>
+                                    <option value="2">2 chỗ</option>
+                                    <option value="4">4 chỗ</option>
+                                    <option value="5">5 chỗ</option>
+                                    <option value="7">7 chỗ</option>
+                                    <option value="9">9 chỗ</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Hãng xe</label>
+                                <select class="form-select" th:field="*{producer.producerId}">
+                                    <option value="">Chọn hãng</option>
+                                    <option th:each="producer : ${producers}"
+                                            th:value="${producer.producerId}"
+                                            th:text="${producer.producerName}">Hãng
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Giá thuê (VNĐ/ngày)</label>
+                                <input type="number" class="form-control" th:field="*{rentPrice}" min="100000"
+                                       step="50000" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ngày nhập</label>
+                                <input type="date" class="form-control" th:field="*{importDate}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Trạng thái</label>
+                                <select class="form-select" th:field="*{status}">
+                                    <option th:each="s : ${status}"
+                                            th:value="${s.name()}"
+                                            th:text="${s.name() == 'AVAILABLE' ? 'Có sẵn' :
+                                                        (s.name() == 'RENTED' ? 'Đang thuê' :
+                                                        (s.name() == 'MAINTENANCE' ? 'Bảo trì' : 'Ngưng hoạt động'))}">
+                                    </option>
+                                </select>
+
+
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Mô tả</label>
+                                <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-primary">Thêm xe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Modal Chỉnh sửa xe -->
+    <div class="modal fade" id="editCarModal" tabindex="-1" aria-labelledby="editCarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form th:action="@{/api/v1/admin/cars/update}" method="post" th:object="${car}">
+                    <input type="hidden" th:field="*{carId}" id="edit-carId"/>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCarModalLabel">Chỉnh sửa xe</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tên xe</label>
+                            <input type="text" class="form-control" th:field="*{carName}" id="edit-carName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Năm sản xuất</label>
+                            <input type="number" class="form-control" th:field="*{carModelYear}" id="edit-carModelYear"
+                                   min="2000" max="2025" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Màu sắc</label>
+                            <input type="text" class="form-control" th:field="*{color}" id="edit-color" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Số chỗ</label>
+                            <select class="form-select" th:field="*{capacity}" id="edit-capacity">
+                                <option value="2">2 chỗ</option>
+                                <option value="4">4 chỗ</option>
+                                <option value="5">5 chỗ</option>
+                                <option value="7">7 chỗ</option>
+                                <option value="9">9 chỗ</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Hãng xe</label>
+                            <select class="form-select" th:field="*{producer.producerId}" id="edit-producer">
+                                <option th:each="p : ${producers}" th:value="${p.producerId}"
+                                        th:text="${p.producerName}">Hãng
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Giá thuê (VNĐ/ngày)</label>
+                            <input type="number" class="form-control" th:field="*{rentPrice}" id="edit-rentPrice"
+                                   min="100000" step="50000" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ngày nhập</label>
+                            <input type="date" class="form-control" th:field="*{importDate}" id="edit-importDate"
+                                   required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Trạng thái</label>
+                            <select class="form-select" th:field="*{status}" id="edit-status">
+                                <option th:each="s : ${status}" th:value="${s.name()}"
+                                        th:text="${s.name() == 'AVAILABLE' ? 'Có sẵn' :
+                                                  (s.name() == 'RENTED' ? 'Đang thuê' :
+                                                  (s.name() == 'MAINTENANCE' ? 'Bảo trì' : 'Ngưng hoạt động'))}"></option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Mô tả</label>
+                            <textarea class="form-control" th:field="*{description}" id="edit-description"
+                                      rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Cập nhật xe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>
+<script>
+    function showEditModal(button) {
+        const modal = new bootstrap.Modal(document.getElementById('editCarModal'));
+        document.getElementById('edit-carId').value = button.getAttribute('data-id');
+        document.getElementById('edit-carName').value = button.getAttribute('data-name');
+        document.getElementById('edit-carModelYear').value = button.getAttribute('data-year');
+        document.getElementById('edit-color').value = button.getAttribute('data-color');
+        document.getElementById('edit-capacity').value = button.getAttribute('data-capacity');
+        document.getElementById('edit-producer').value = button.getAttribute('data-producer');
+        document.getElementById('edit-rentPrice').value = button.getAttribute('data-price');
+        document.getElementById('edit-importDate').value = button.getAttribute('data-date');
+        document.getElementById('edit-status').value = button.getAttribute('data-status');
+        document.getElementById('edit-description').value = button.getAttribute('data-description');
+        modal.show();
+    }
+</script>

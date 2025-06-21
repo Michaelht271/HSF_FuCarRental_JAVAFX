@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/customer}">
+
+<div layout:fragment="content">
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="page-title">Lịch sử thuê xe</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">Lịch sử thuê xe</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <!-- Filter Tabs -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <ul class="nav nav-pills justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#all" data-bs-toggle="pill">
+                            Tất cả <span class="badge bg-secondary ms-1" th:text="${totalBookings}">12</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pending" data-bs-toggle="pill">
+                            Chờ duyệt <span class="badge bg-warning ms-1" th:text="${pendingBookings}">2</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#active" data-bs-toggle="pill">
+                            Đang thuê <span class="badge bg-primary ms-1" th:text="${activeBookings}">1</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#completed" data-bs-toggle="pill">
+                            Hoàn thành <span class="badge bg-success ms-1" th:text="${completedBookings}">8</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cancelled" data-bs-toggle="pill">
+                            Đã hủy <span class="badge bg-danger ms-1" th:text="${cancelledBookings}">1</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bookings List -->
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="all">
+                <div class="row g-4">
+                    <div class="col-12" th:each="booking : ${bookings}">
+                        <div class="booking-card">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body p-4">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2">
+                                            <img src="/placeholder.svg?height=100&width=150" alt="Car" class="img-fluid rounded">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="booking-info">
+                                                <h5 class="mb-1" th:text="${booking.car.carName}">Toyota Camry</h5>
+                                                <p class="text-muted mb-2">
+                                                    <i class="fas fa-calendar me-1"></i>
+                                                    <span th:text="${#temporals.format(booking.pickupDate, 'dd/MM/yyyy')}">20/01/2024</span>
+                                                    - 
+                                                    <span th:text="${#temporals.format(booking.returnDate, 'dd/MM/yyyy')}">25/01/2024</span>
+                                                    (<span th:text="${booking.totalDays}">5</span> ngày)
+                                                </p>
+                                                <p class="text-muted mb-2">
+                                                    <i class="fas fa-map-marker-alt me-1"></i>
+                                                    Nhận xe tại: Văn phòng chính
+                                                </p>
+                                                <div class="booking-features">
+                                                    <span class="feature-tag">
+                                                        <i class="fas fa-users me-1"></i><span th:text="${booking.car.capacity}">5</span> chỗ
+                                                    </span>
+                                                    <span class="feature-tag">
+                                                        <i class="fas fa-palette me-1"></i><span th:text="${booking.car.color}">Trắng</span>
+                                                    </span>
+                                                    <span class="feature-tag">
+                                                        <i class="fas fa-cog me-1"></i>Tự động
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 text-center">
+                                            <div class="booking-price">
+                                                <div class="price-amount" th:text="${#numbers.formatCurrency(booking.rentPrice)}">₫4,000,000</div>
+                                                <small class="text-muted">Tổng tiền</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 text-end">
+                                            <div class="booking-status mb-3">
+                                                <span th:class="'badge fs-6 ' + (${booking.status == 'PENDING'} ? 'bg-warning' : (${booking.status == 'ACTIVE'} ? 'bg-primary' : (${booking.status == 'COMPLETED'} ? 'bg-success' : 'bg-danger')))"
+                                                      th:text="${booking.status == 'PENDING' ? 'Chờ duyệt' : (booking.status == 'ACTIVE' ? 'Đang thuê' : (booking.status == 'COMPLETED' ? 'Hoàn thành' : 'Đã hủy'))}">
+                                                    Chờ duyệt
+                                                </span>
+                                            </div>
+                                            <div class="booking-actions">
+                                                <button class="btn btn-sm btn-outline-primary mb-1" 
+                                                        th:onclick="'viewBookingDetail(' + ${booking.id} + ')'">
+                                                    <i class="fas fa-eye me-1"></i>Chi tiết
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger" 
+                                                        th:if="${booking.status == 'PENDING'}"
+                                                        th:onclick="'cancelBooking(' + ${booking.id} + ')'">
+                                                    <i class="fas fa-times me-1"></i>Hủy
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-success" 
+                                                        th:if="${booking.status == 'COMPLETED'}"
+                                                        th:onclick="'reviewBooking(' + ${booking.id} + ')'">
+                                                    <i class="fas fa-star me-1"></i>Đánh giá
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No Bookings -->
+                <div th:if="${bookings.empty}" class="text-center py-5">
+                    <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">Chưa có lịch sử thuê xe</h4>
+                    <p class="text-muted">Bạn chưa có giao dịch thuê xe nào</p>
+                    <a th:href="@{/cars}" class="btn btn-primary">
+                        <i class="fas fa-car me-2"></i>Thuê xe ngay
+                    </a>
+                </div>
+
+                <!-- Pagination -->
+                <nav th:if="${bookings.totalPages > 1}" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:class="${bookings.first} ? 'disabled'">
+                            <a class="page-link" th:href="@{/customer/bookings(page=${bookings.number - 1})}">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        <li th:each="i : ${#numbers.sequence(0, bookings.totalPages - 1)}" 
+                            class="page-item" th:class="${i == bookings.number} ? 'active'">
+                            <a class="page-link" th:href="@{/customer/bookings(page=${i})}" 
+                               th:text="${i + 1}">1</a>
+                        </li>
+                        <li class="page-item" th:class="${bookings.last} ? 'disabled'">
+                            <a class="page-link" th:href="@{/customer/bookings(page=${bookings.number + 1})}">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Detail Modal -->
+    <div class="modal fade" id="bookingDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chi tiết đơn thuê xe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Booking details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Đánh giá dịch vụ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form th:action="@{/customer/bookings/review}" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" id="reviewBookingId" name="bookingId">
+                        <div class="mb-3">
+                            <label class="form-label">Đánh giá của bạn</label>
+                            <div class="rating-input">
+                                <input type="radio" id="star5" name="rating" value="5">
+                                <label for="star5"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4">
+                                <label for="star4"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3">
+                                <label for="star3"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2">
+                                <label for="star2"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1">
+                                <label for="star1"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Nhận xét</label>
+                            <textarea class="form-control" id="comment" name="comment" rows="4" 
+                                      placeholder="Chia sẻ trải nghiệm của bạn về dịch vụ..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-star me-2"></i>Gửi đánh giá
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
