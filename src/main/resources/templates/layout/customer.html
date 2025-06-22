@@ -3,18 +3,200 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
+    <title>FU Car Rental</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link th:href="@{/css/customer.css}" rel="stylesheet">
+<!--    <link rel="stylesheet" th:href="@{/css/customer.css}">-->
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #adb5bd;
+        }
+
+        /* Header */
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        header .nav-link {
+            transition: color 0.2s;
+        }
+
+        header .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Dropdown user */
+        .dropdown-menu {
+            min-width: 180px;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Main content area */
+        .main-content {
+            min-height: 70vh;
+        }
+
+        /* Footer */
+        footer {
+            /*background-color: var(--dark-color);*/
+            color: var(--light-color);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+
+        .btn-outline-light {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .btn-outline-light:hover {
+            background-color: #fff;
+            color: var(--dark-color);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(to right, #0d6efd, #00bcd4);
+            padding: 60px 0;
+            color: white;
+        }
+
+        .hero-content h1 {
+            line-height: 1.3;
+        }
+
+        .hero-buttons a {
+            margin-right: 10px;
+        }
+
+        /* Car Cards */
+        .car-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .car-image {
+            position: relative;
+        }
+
+        .car-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .car-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .car-info {
+            padding: 15px;
+        }
+
+        .car-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .car-details {
+            font-size: 0.9rem;
+            margin: 5px 0 10px;
+        }
+
+        .car-features .feature-tag {
+            display: inline-block;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            font-size: 0.8rem;
+            padding: 2px 6px;
+            margin-right: 5px;
+            border-radius: 4px;
+        }
+
+        .car-price-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .price-amount {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .price-unit {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #333;
+        }
+
+        .stars i {
+            margin-right: 2px;
+        }
+
+        /* Utilities */
+        .text-light {
+            color: var(--gray-color) !important;
+        }
+
+    </style>
 </head>
 <body>
+
+<!-- Header -->
 <header class="bg-white shadow-sm">
     <div class="container d-flex justify-content-between align-items-center py-3">
-        <!-- Logo / Brand -->
         <div class="d-flex align-items-center gap-2">
             <i class="fas fa-car text-danger fa-lg"></i>
             <h1 class="h5 fw-bold mb-0 text-dark">FU Car Renting System</h1>
@@ -22,30 +204,34 @@
 
         <!-- Navigation -->
         <nav class="d-flex align-items-center gap-4">
-            <a th:href="@{/}" class="text-dark fw-medium nav-link">Trang chủ</a>
-            <a th:href="@{/api/v1/customer/cars}" class="text-dark fw-medium nav-link">Thuê xe</a>
-            <a th:href="@{/api/v1/customer/orders}" class="text-dark fw-medium nav-link">Đơn thuê</a>
-            <a th:href="@{/api/v1/customer/profile}" class="text-dark fw-medium nav-link">Tài khoản</a>
+            <a th:href="@{/api/v1/customers/home}" class="text-dark fw-medium nav-link">Trang chủ</a>
+            <a th:href="@{/api/v1/customers/cars}" class="text-dark fw-medium nav-link">Thuê xe</a>
+            <a th:href="@{/api/v1/customers/bookings}" class="text-dark fw-medium nav-link">Lich sử   </a>
+            <a th:href="@{/api/v1/customers/profile}" class="text-dark fw-medium nav-link">Tài khoản</a>
 
             <!-- User Dropdown -->
             <div class="dropdown">
                 <a class="dropdown-toggle text-dark fw-medium" href="#" role="button" data-bs-toggle="dropdown">
                     <i class="fas fa-user-circle me-1"></i>
-                    <span th:text="${#authentication.name}">Tên người dùng</span>
+                    <span th:text="${#authentication?.name}">Người dùng</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" th:href="@{/api/v1/customer/profile}">Thông tin cá nhân</a></li>
-                    <li><a class="dropdown-item" th:href="@{/api/v1/customer/logout}">Đăng xuất</a></li>
+                    <li><a class="dropdown-item" th:href="@{/api/v1/customers/profile}">Thông tin cá nhân</a></li>
+                    <li>
+                        <form th:action="@{/api/v1/public/logout}" method="post">
+                            <button type="submit" class="dropdown-item">Đăng xuất</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </nav>
     </div>
 </header>
 
-<!-- Main Content -->
-<main class="main-content pt-5 mt-4">
+<!-- Main Content Fragment -->
+<main class="main-content pt-4 mt-3">
     <div layout:fragment="content">
-        <!-- Nội dung riêng của mỗi trang -->
+        <!-- Nội dung trang con sẽ được chèn vào đây -->
     </div>
 </main>
 
@@ -55,7 +241,7 @@
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <h5><i class="fas fa-car text-primary me-2"></i>FU Car Rental</h5>
-                <p class="text-muted">Dịch vụ cho thuê xe hàng đầu Việt Nam với đội ngũ chuyên nghiệp và xe chất lượng cao.</p>
+                <p class="text-light">Dịch vụ cho thuê xe hàng đầu Việt Nam với đội ngũ chuyên nghiệp và xe chất lượng cao.</p>
                 <div class="social-links">
                     <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
@@ -66,24 +252,24 @@
             <div class="col-lg-2 mb-4">
                 <h6>Dịch vụ</h6>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-muted">Thuê xe tự lái</a></li>
-                    <li><a href="#" class="text-muted">Thuê xe có tài xế</a></li>
-                    <li><a href="#" class="text-muted">Thuê xe dài hạn</a></li>
-                    <li><a href="#" class="text-muted">Xe cưới</a></li>
+                    <li><a href="#" class="text-light">Thuê xe tự lái</a></li>
+                    <li><a href="#" class="text-light">Thuê xe có tài xế</a></li>
+                    <li><a href="#" class="text-light">Thuê xe dài hạn</a></li>
+                    <li><a href="#" class="text-light">Xe cưới</a></li>
                 </ul>
             </div>
             <div class="col-lg-2 mb-4">
                 <h6>Hỗ trợ</h6>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-muted">Hướng dẫn thuê xe</a></li>
-                    <li><a href="#" class="text-muted">Chính sách</a></li>
-                    <li><a href="#" class="text-muted">Câu hỏi thường gặp</a></li>
-                    <li><a href="#" class="text-muted">Liên hệ</a></li>
+                    <li><a href="#" class="text-light">Hướng dẫn thuê xe</a></li>
+                    <li><a href="#" class="text-light">Chính sách</a></li>
+                    <li><a href="#" class="text-light">Câu hỏi thường gặp</a></li>
+                    <li><a href="#" class="text-light">Liên hệ</a></li>
                 </ul>
             </div>
             <div class="col-lg-4 mb-4">
                 <h6>Liên hệ</h6>
-                <ul class="list-unstyled text-muted">
+                <ul class="list-unstyled text-light">
                     <li><i class="fas fa-map-marker-alt me-2"></i>123 Đường ABC, Quận XYZ, TP.HCM</li>
                     <li><i class="fas fa-phone me-2"></i>1900 1234</li>
                     <li><i class="fas fa-envelope me-2"></i>info@fucarrental.com</li>
@@ -93,17 +279,19 @@
         <hr class="my-4">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <p class="text-muted mb-0">&copy; 2025 FU Car Rental. All rights reserved.</p>
+                <p class="text-light mb-0">&copy; 2025 FU Car Rental. All rights reserved.</p>
             </div>
             <div class="col-md-6 text-md-end">
-                <p class="text-muted mb-0">Thiết kế bởi FU Team</p>
+                <p class="text-light mb-0">Thiết kế bởi FU Team</p>
             </div>
         </div>
     </div>
 </footer>
 
+
 <!-- JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script th:src="@{/js/customer.js}"></script>
+
 </body>
 </html>

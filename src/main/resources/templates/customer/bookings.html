@@ -1,7 +1,13 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/customer}">
-
+<head>
+    <title>History</title>
+    <meta name="description" content="Tìm kiếm và thuê xe ô tô chất lượng cao tại FU Car Rental.">
+    <link rel="stylesheet" th:href="@{/css/customer.css}"/>
+</head>
+<body>
 <div layout:fragment="content">
     <div class="page-header">
         <div class="container">
@@ -70,10 +76,10 @@
                                                 <h5 class="mb-1" th:text="${booking.car.carName}">Toyota Camry</h5>
                                                 <p class="text-muted mb-2">
                                                     <i class="fas fa-calendar me-1"></i>
-                                                    <span th:text="${#temporals.format(booking.pickupDate, 'dd/MM/yyyy')}">20/01/2024</span>
-                                                    - 
-                                                    <span th:text="${#temporals.format(booking.returnDate, 'dd/MM/yyyy')}">25/01/2024</span>
-                                                    (<span th:text="${booking.totalDays}">5</span> ngày)
+                                                    <span th:text="${booking.rentDate}">20/01/2024</span>
+                                                    -
+                                                    <span th:text="${booking.returnDate}">25/01/2024</span>
+                                                    <!--                                                    (<span th:text="${booking.totalDays}">5</span> ngày)-->
                                                 </p>
                                                 <p class="text-muted mb-2">
                                                     <i class="fas fa-map-marker-alt me-1"></i>
@@ -106,16 +112,19 @@
                                                 </span>
                                             </div>
                                             <div class="booking-actions">
-                                                <button class="btn btn-sm btn-outline-primary mb-1" 
-                                                        th:onclick="'viewBookingDetail(' + ${booking.id} + ')'">
+                                                <button class="btn btn-sm btn-outline-primary mb-1"
+                                                        th:attr="data-id=${booking.id}"
+                                                        onclick="viewBookingDetail(this)">
                                                     <i class="fas fa-eye me-1"></i>Chi tiết
                                                 </button>
-                                                <button class="btn btn-sm btn-outline-danger" 
+
+
+                                                <button class="btn btn-sm btn-outline-danger"
                                                         th:if="${booking.status == 'PENDING'}"
                                                         th:onclick="'cancelBooking(' + ${booking.id} + ')'">
                                                     <i class="fas fa-times me-1"></i>Hủy
                                                 </button>
-                                                <button class="btn btn-sm btn-outline-success" 
+                                                <button class="btn btn-sm btn-outline-success"
                                                         th:if="${booking.status == 'COMPLETED'}"
                                                         th:onclick="'reviewBooking(' + ${booking.id} + ')'">
                                                     <i class="fas fa-star me-1"></i>Đánh giá
@@ -130,7 +139,7 @@
                 </div>
 
                 <!-- No Bookings -->
-                <div th:if="${bookings.empty}" class="text-center py-5">
+                <div th:if="${bookings.isEmpty()}" class="text-center py-5">
                     <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
                     <h4 class="text-muted">Chưa có lịch sử thuê xe</h4>
                     <p class="text-muted">Bạn chưa có giao dịch thuê xe nào</p>
@@ -139,26 +148,7 @@
                     </a>
                 </div>
 
-                <!-- Pagination -->
-                <nav th:if="${bookings.totalPages > 1}" class="mt-5">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item" th:class="${bookings.first} ? 'disabled'">
-                            <a class="page-link" th:href="@{/customer/bookings(page=${bookings.number - 1})}">
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
-                        </li>
-                        <li th:each="i : ${#numbers.sequence(0, bookings.totalPages - 1)}" 
-                            class="page-item" th:class="${i == bookings.number} ? 'active'">
-                            <a class="page-link" th:href="@{/customer/bookings(page=${i})}" 
-                               th:text="${i + 1}">1</a>
-                        </li>
-                        <li class="page-item" th:class="${bookings.last} ? 'disabled'">
-                            <a class="page-link" th:href="@{/customer/bookings(page=${bookings.number + 1})}">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+
             </div>
         </div>
     </div>
@@ -206,7 +196,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="comment" class="form-label">Nhận xét</label>
-                            <textarea class="form-control" id="comment" name="comment" rows="4" 
+                            <textarea class="form-control" id="comment" name="comment" rows="4"
                                       placeholder="Chia sẻ trải nghiệm của bạn về dịch vụ..."></textarea>
                         </div>
                     </div>
@@ -221,4 +211,12 @@
         </div>
     </div>
 </div>
+</body>
+
 </html>
+<script>
+    function viewBookingDetail(button) {
+        const id = button.getAttribute("data-id");
+        window.location.href = "/customer/bookings/" + id;
+    }
+</script>

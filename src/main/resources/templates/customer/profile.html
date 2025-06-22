@@ -80,7 +80,7 @@
                         <a href="#change-password" class="list-group-item list-group-item-action" data-bs-toggle="tab">
                             <i class="fas fa-lock me-2"></i>Đổi mật khẩu
                         </a>
-                        <a th:href="@{/customer/bookings}" class="list-group-item list-group-item-action">
+                        <a th:href="@{/api/v1/customer/bookings}" class="list-group-item list-group-item-action">
                             <i class="fas fa-history me-2"></i>Lịch sử thuê xe
                         </a>
                         <a href="#notifications" class="list-group-item list-group-item-action" data-bs-toggle="tab">
@@ -102,7 +102,7 @@
                                 </h5>
                             </div>
                             <div class="card-body p-4">
-                                <form th:action="@{/customer/profile/update}" method="post" class="needs-validation" novalidate>
+                                <form th:action="@{/api/v1/customers/profile/update}" method="post" class="needs-validation" novalidate>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="customerName" class="form-label">Họ và tên *</label>
@@ -145,7 +145,7 @@
                                         <div class="col-md-6 mb-3">
                                             <label for="identityCard" class="form-label">CMND/CCCD *</label>
                                             <input type="text" class="form-control" id="identityCard" name="identityCard"
-                                                   th:value="${customer.identityCard}" required>
+                                                   th:value="${customer.getIdentifyCard()}" required>
                                             <div class="invalid-feedback">
                                                 Vui lòng nhập CMND/CCCD hợp lệ
                                             </div>
@@ -190,7 +190,7 @@
                                 </h5>
                             </div>
                             <div class="card-body p-4">
-                                <form th:action="@{/customer/profile/change-password}" method="post" class="needs-validation" novalidate>
+                                <form th:action="@{/api/v1/customers/profile/change-password}" method="post" class="needs-validation" novalidate>
                                     <div class="mb-3">
                                         <label for="currentPassword" class="form-label">Mật khẩu hiện tại *</label>
                                         <div class="input-group">
@@ -220,7 +220,7 @@
                                     <div class="mb-3">
                                         <label for="confirmNewPassword" class="form-label">Xác nhận mật khẩu mới *</label>
                                         <div class="input-group">
-                                            <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" required>
+                                            <input type="password" class="form-control" id="confirmNewPassword" name="confirmPassword" required>
                                             <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmNewPassword')">
                                                 <i class="fas fa-eye"></i>
                                             </button>
@@ -249,7 +249,7 @@
                                 </h5>
                             </div>
                             <div class="card-body p-4">
-                                <form th:action="@{/customer/profile/notifications}" method="post">
+                                <form th:action="@{/api/v1/customers/profile/notifications}" method="post">
                                     <div class="mb-3">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" id="emailNotifications" name="emailNotifications" checked>

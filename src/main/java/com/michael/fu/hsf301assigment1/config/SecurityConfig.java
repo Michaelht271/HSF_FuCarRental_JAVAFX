@@ -1,9 +1,11 @@
 package com.michael.fu.hsf301assigment1.config;
 
+import com.michael.fu.hsf301assigment1.entity.Customer;
 import com.michael.fu.hsf301assigment1.service.impl.CustomerService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,12 +28,19 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  */
 @Configuration // Đánh dấu đây là một lớp cấu hình Spring.
 @EnableWebSecurity // Bật tính năng bảo mật Web trong Spring Security.
-@AllArgsConstructor // Tự động tạo constructor cho các final fields.
+// Tự động tạo constructor cho các final fields.
 public class SecurityConfig {
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     // Dịch vụ người dùng tùy chỉnh, dùng để truy vấn người dùng từ DB.
     private final CustomerService appUserService;
+    private final CustomerSession customerSession;
+
+    @Autowired
+    public SecurityConfig(CustomerService appUserService, CustomerSession customerSession) {
+        this.appUserService = appUserService;
+        this.customerSession = customerSession;
+    }
 
     /**
      * Bean UserDetailsService dùng để Spring gọi khi xác thực người dùng.
@@ -79,28 +88,33 @@ public class SecurityConfig {
      * Tùy theo role của người dùng, sẽ redirect đến trang khác nhau.
      */
     @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(CustomerService customerService,
+                                                                       CustomerSession customerSession) {
         logger.info("Khởi tạo Bean AuthenticationSuccessHandler để điều hướng theo Role.");
 
         return (request, response, authentication) -> {
-            // Duyệt qua danh sách role của người dùng đã đăng nhập
+            String email = authentication.getName(); // Email chính là username
+            Customer customer = customerService.findCustomerByEmail(email); // Lấy Customer từ DB
+
+            if (customer != null) {
+                customerSession.setCustomer(customer); // Lưu vào Session
+                customerSession.setAuthenticated(true);
+                logger.info("Customer lưu vào session: {}", customer.getEmail());
+            }
+
+            // Chuyển hướng theo role
             for (GrantedAuthority authority : authentication.getAuthorities()) {
                 String role = authority.getAuthority();
-
-                // Nếu là admin thì chuyển hướng đến dashboard admin
                 if ("ROLE_ADMIN".equals(role)) {
                     response.sendRedirect("/api/v1/admin/dashboard");
                     return;
-                }
-                // Nếu là user thì chuyển đến trang khách hàng
-                else if ("ROLE_USER".equals(role)) {
+                } else if ("ROLE_USER".equals(role)) {
                     response.sendRedirect("/api/v1/customers/home");
                     return;
                 }
             }
 
-            // Nếu không có role nào phù hợp, chuyển về trang public
-            logger.warn("Không tìm thấy Role phù hợp, chuyển hướng về trang public.");
+            // Nếu không có role hợp lệ
             response.sendRedirect("/api/v1/public/");
         };
     }
@@ -139,7 +153,7 @@ public class SecurityConfig {
                 .formLogin(login -> login
                         .loginPage("/api/v1/public/login") // URL GET trang login
                         .loginProcessingUrl("/api/v1/public/process-login") // URL POST xử lý login
-                        .successHandler(myAuthenticationSuccessHandler()) // Xử lý sau login thành công
+                        .successHandler(myAuthenticationSuccessHandler(appUserService, customerSession)) // Xử lý sau login thành công
                         .failureUrl("/api/v1/public/login?error")
                         .permitAll()
                 )

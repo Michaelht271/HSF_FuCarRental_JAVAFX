@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -51,10 +52,10 @@ public class Customer {
     private Account account;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CarRental> carRentals;
+    private List<CarRental> carRentals = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
 
     public void addCarRental(CarRental carRental) {
         carRentals.add(carRental);

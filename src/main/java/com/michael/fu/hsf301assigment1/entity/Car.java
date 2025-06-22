@@ -50,17 +50,21 @@ public class Car {
 
     // Relationships
     @OneToMany(mappedBy = "car",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CarRental> carRentals;
+    private List<CarRental> carRentals = new ArrayList<>();
 
     @OneToMany(mappedBy ="car",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
 
 
     public void addCarRental(CarRental carRental) {
-         carRentals.add(carRental);
-         carRental.setCar(this);
+        if (carRentals == null) {
+            carRentals = new ArrayList<>();
+        }
+        carRentals.add(carRental);
+        carRental.setCar(this); // nếu bạn chưa gọi ở ngoài
     }
+
     public void addReview(Review review) {
         reviews.add(review);
         review.setCar(this);

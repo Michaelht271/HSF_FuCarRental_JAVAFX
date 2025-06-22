@@ -3,7 +3,8 @@ package com.michael.fu.hsf301assigment1.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity // ← BẮT BUỘC PHẢI CÓ
 @Table(name ="CarRental")
@@ -29,22 +30,18 @@ public class CarRental {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "RentDate")// tốt hơn nên thêm
-    private Date rentDate;
+    private LocalDate rentDate;
 
 
     @Temporal(TemporalType.DATE)
     @Column(name = "ReturnDate")
-    private Date returnDate;
+    private LocalDate returnDate;
 
     @Column(name="RentPrice", columnDefinition = "DECIMAL(18,2)")
     private double rentPrice;
 
     @Enumerated(EnumType.STRING)
     @Column(name="Status", columnDefinition = "NVARCHAR(10)", nullable = false)
-    private Status status;
+    private CarRentalStatus status;
 
-   enum Status {
-
-       BOOKED, PICKED_UP, RETURNED, CANCELED;
-   }
 }

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/customer}">
 <head>
     <title>Car Rental - Trang chủ</title>
     <link rel="stylesheet" th:href="@{/css/customer.css}" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-<div th:replace="~{fragments/header :: customer-header}"></div>
 
 <div layout:fragment="content">
     <!-- Hero Section -->
@@ -23,13 +23,14 @@
                             <span class="text-warning">An toàn & Tiện lợi</span>
                         </h1>
                         <p class="lead text-white-50 mb-4">
-                            Khám phá thành phố với dịch vụ cho thuê xe hàng đầu. 
+                            Khám phá thành phố với dịch vụ cho thuê xe hàng đầu.
                             Đa dạng loại xe, giá cả hợp lý, dịch vụ chuyên nghiệp.
                         </p>
                         <div class="hero-buttons">
                             <a th:href="@{/api/v1/customer/cars}" class="btn btn-warning btn-lg me-3">
                                 <i class="fas fa-car me-2"></i>Thuê xe ngay
                             </a>
+
                             <a href="#features" class="btn btn-outline-light btn-lg">
                                 <i class="fas fa-info-circle me-2"></i>Tìm hiểu thêm
                             </a>
@@ -51,7 +52,7 @@
         <div class="container">
             <div class="card border-0 shadow">
                 <div class="card-body p-4">
-                    <h4 class="text-center mb-4">Tìm kiếm xe phù hợp</h4>
+                    <h4 class="text-center mb-4 ">Tìm kiếm xe phù hợp</h4>
                     <form th:action="@{/api/v1/customer/cars}" method="get" class="row g-3" id="searchForm">
                         <div class="col-md-3">
                             <label for="pickupDate" class="form-label">Ngày nhận xe</label>
@@ -73,8 +74,9 @@
                         </div>
                         <div class="col-md-3 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary w-100">
-                                <i class="fas fa-search me-2">Tìm kiếm</i>
+                                <i class="fas fa-search me-2"></i> Tìm kiếm
                             </button>
+
                         </div>
                     </form>
                 </div>
@@ -89,7 +91,7 @@
                 <h2 class="display-5 fw-bold">Tại sao chọn chúng tôi?</h2>
                 <p class="lead text-muted">Những ưu điểm vượt trội của dịch vụ cho thuê xe FU</p>
             </div>
-            
+
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card text-center h-100">
@@ -100,7 +102,7 @@
                         <p class="text-muted">Tất cả xe đều được bảo hiểm đầy đủ và kiểm tra kỹ thuật định kỳ</p>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card text-center h-100">
                         <div class="feature-icon">
@@ -110,7 +112,7 @@
                         <p class="text-muted">Dịch vụ giao nhận xe tận nơi 24/7, linh hoạt theo yêu cầu</p>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card text-center h-100">
                         <div class="feature-icon">
@@ -120,7 +122,7 @@
                         <p class="text-muted">Bảng giá minh bạch, không phí phát sinh, nhiều ưu đãi hấp dẫn</p>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card text-center h-100">
                         <div class="feature-icon">
@@ -130,7 +132,7 @@
                         <p class="text-muted">Từ xe 4 chỗ đến xe 16 chỗ, đáp ứng mọi nhu cầu di chuyển</p>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card text-center h-100">
                         <div class="feature-icon">
@@ -140,7 +142,7 @@
                         <p class="text-muted">Đội ngũ chăm sóc khách hàng chuyên nghiệp, sẵn sàng hỗ trợ mọi lúc</p>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card text-center h-100">
                         <div class="feature-icon">
@@ -161,112 +163,48 @@
                 <h2 class="display-5 fw-bold">Xe được thuê nhiều nhất</h2>
                 <p class="lead text-muted">Những mẫu xe được khách hàng yêu thích</p>
             </div>
-            
+
             <div class="row g-4">
-                <!-- Sample car data - replace with th:each when integrated with backend -->
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6" th:each="car : ${cars}">
                     <div class="car-card">
-                        <div class="car-image">
-                            <img src="/images/cars/camry.jpg" alt="Toyota Camry" class="img-fluid"
+                        <div class="car-image position-relative">
+                            <img th:src="@{|/images/cars/${car.carName.toLowerCase()}.jpg|}" alt="Ảnh xe"
+                                 class="img-fluid rounded shadow"
                                  onerror="this.src='/placeholder.svg?height=200&width=300'">
-                            <div class="car-badge">
-                                <span class="badge bg-success">Có sẵn</span>
+                            <div class="car-badge position-absolute top-0 start-0 m-2">
+                            <span class="badge"
+                                  th:classappend="${car.status.name() == 'AVAILABLE'} ? 'bg-success' : 'bg-warning'"
+                                  th:text="${car.status.name() == 'AVAILABLE'} ? 'Có sẵn' : 'Đang thuê'"></span>
                             </div>
                         </div>
-                        <div class="car-info">
-                            <h5 class="car-name">Toyota Camry</h5>
-                            <p class="car-details text-muted">
-                                <i class="fas fa-calendar me-1"></i>2023 •
-                                <i class="fas fa-users me-1"></i>5 chỗ •
+                        <div class="car-info p-3">
+                            <h5 class="car-name fw-bold mb-2" th:text="${car.carName}">Tên xe</h5>
+                            <p class="car-details text-muted mb-2">
+                                <i class="fas fa-calendar me-1"></i><span th:text="${car.carModelYear}">2023</span> •
+                                <i class="fas fa-users me-1"></i><span th:text="${car.capacity}">5</span> chỗ •
                                 <i class="fas fa-cog me-1"></i>Tự động
                             </p>
-                            <div class="car-features">
-                                <span class="feature-tag">Điều hòa</span>
-                                <span class="feature-tag">GPS</span>
-                                <span class="feature-tag">Bluetooth</span>
+                            <div class="car-features mb-2">
+                                <span class="badge bg-light text-dark border me-1">Điều hòa</span>
+                                <span class="badge bg-light text-dark border me-1">GPS</span>
+                                <span class="badge bg-light text-dark border">Bluetooth</span>
                             </div>
-                            <div class="car-price-action">
+                            <div class="car-price-action d-flex justify-content-between align-items-center">
                                 <div class="price">
-                                    <span class="price-amount">₫800,000</span>
-                                    <span class="price-unit">/ngày</span>
+                                <span class="fw-bold text-danger fs-5"
+                                      th:text="|${#numbers.formatInteger(car.rentPrice, 0, 'COMMA')}|">₫800,000</span>
+                                    <span class="text-muted">/ngày</span>
                                 </div>
-                                <a href="/cars/1" class="btn btn-primary">
-                                    <i class="fas fa-eye me-1"></i>Xem chi tiết
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="car-card">
-                        <div class="car-image">
-                            <img src="/images/cars/fortuner.jpg" alt="Toyota Fortuner" class="img-fluid"
-                                 onerror="this.src='/placeholder.svg?height=200&width=300'">
-                            <div class="car-badge">
-                                <span class="badge bg-success">Có sẵn</span>
-                            </div>
-                        </div>
-                        <div class="car-info">
-                            <h5 class="car-name">Toyota Fortuner</h5>
-                            <p class="car-details text-muted">
-                                <i class="fas fa-calendar me-1"></i>2023 •
-                                <i class="fas fa-users me-1"></i>7 chỗ •
-                                <i class="fas fa-cog me-1"></i>Tự động
-                            </p>
-                            <div class="car-features">
-                                <span class="feature-tag">Điều hòa</span>
-                                <span class="feature-tag">GPS</span>
-                                <span class="feature-tag">4WD</span>
-                            </div>
-                            <div class="car-price-action">
-                                <div class="price">
-                                    <span class="price-amount">₫1,200,000</span>
-                                    <span class="price-unit">/ngày</span>
-                                </div>
-                                <a href="/cars/2" class="btn btn-primary">
-                                    <i class="fas fa-eye me-1"></i>Xem chi tiết
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="car-card">
-                        <div class="car-image">
-                            <img src="/images/cars/vios.jpg" alt="Toyota Vios" class="img-fluid"
-                                 onerror="this.src='/placeholder.svg?height=200&width=300'">
-                            <div class="car-badge">
-                                <span class="badge bg-warning">Đang thuê</span>
-                            </div>
-                        </div>
-                        <div class="car-info">
-                            <h5 class="car-name">Toyota Vios</h5>
-                            <p class="car-details text-muted">
-                                <i class="fas fa-calendar me-1"></i>2022 •
-                                <i class="fas fa-users me-1"></i>5 chỗ •
-                                <i class="fas fa-cog me-1"></i>Tự động
-                            </p>
-                            <div class="car-features">
-                                <span class="feature-tag">Điều hòa</span>
-                                <span class="feature-tag">GPS</span>
-                                <span class="feature-tag">Bluetooth</span>
-                            </div>
-                            <div class="car-price-action">
-                                <div class="price">
-                                    <span class="price-amount">₫600,000</span>
-                                    <span class="price-unit">/ngày</span>
-                                </div>
-                                <a href="/cars/3" class="btn btn-primary">
-                                    <i class="fas fa-eye me-1"></i>Xem chi tiết
+                                <a class="btn btn-outline-info btn-sm"
+                                   th:href="@{'/api/v1/customer/cars/' + ${car.carId}}">
+                                    <i class="fas fa-eye me-1"></i>Chi tiết
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="text-center mt-5">
                 <a href="/cars" class="btn btn-outline-primary btn-lg">
                     <i class="fas fa-car me-2"></i>Xem tất cả xe
@@ -282,7 +220,7 @@
                 <h2 class="display-5 fw-bold">Khách hàng nói gì về chúng tôi</h2>
                 <p class="lead text-muted">Những đánh giá chân thực từ khách hàng</p>
             </div>
-            
+
             <div class="row g-4">
                 <div class="col-lg-4">
                     <div class="testimonial-card">
@@ -300,7 +238,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4">
                     <div class="testimonial-card">
                         <div class="stars mb-3">
@@ -317,7 +255,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4">
                     <div class="testimonial-card">
                         <div class="stars mb-3">
@@ -338,40 +276,38 @@
         </div>
     </section>
 </div>
-<div th:insert="~{fragments/footer :: footer}"></div>
-
 </body>
 <script>
 // Initialize date inputs when page loads
 document.addEventListener('DOMContentLoaded', function() {
     const today = new Date().toISOString().split('T')[0];
     const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-    
+
     const pickupDate = document.getElementById('pickupDate');
     const returnDate = document.getElementById('returnDate');
-    
+
     if (pickupDate && !pickupDate.value) {
         pickupDate.value = today;
         pickupDate.min = today;
     }
-    
+
     if (returnDate && !returnDate.value) {
         returnDate.value = tomorrow;
         returnDate.min = tomorrow;
     }
-    
+
     // Update return date when pickup date changes
     if (pickupDate) {
         pickupDate.addEventListener('change', function() {
             const selectedDate = new Date(this.value);
             const minReturnDate = new Date(selectedDate.getTime() + 24 * 60 * 60 * 1000);
             returnDate.min = minReturnDate.toISOString().split('T')[0];
-            
+
             if (new Date(returnDate.value) <= selectedDate) {
                 returnDate.value = minReturnDate.toISOString().split('T')[0];
             }
         });
     }
-});s
+});
 </script>
 </html>

@@ -9,8 +9,6 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode
 public class CarCustomerID implements Serializable {
     @Column(name="CarID")

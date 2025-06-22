@@ -221,8 +221,9 @@ body {
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
+  will-change: transform, box-shadow;
 }
 
 .car-card:hover {
@@ -697,7 +698,7 @@ body {
   padding: 1.5rem;
 }
 footer {
-  background-color: var(--dark-color);
+  /*background-color: var(--dark-color);*/
   color: white;
 }
 

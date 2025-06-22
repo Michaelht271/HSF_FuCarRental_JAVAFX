@@ -1,309 +1,108 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/customer}">
 
-<div layout:fragment="content">
-    <div class="page-header">
-        <div class="container">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{/cars}">Thuê xe</a></li>
-                    <li class="breadcrumb-item active" th:text="${car.carName}">Toyota Camry</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
+<head>
+    <title layout:fragment="title">Chi tiết xe</title>
+</head>
 
+<div layout:fragment="content">
     <div class="container py-5">
         <div class="row">
-            <!-- Car Images -->
-            <div class="col-lg-8">
-                <div class="car-gallery">
-                    <div class="main-image mb-3">
-                        <img src="/placeholder.svg?height=400&width=600" alt="Car Main Image" class="img-fluid rounded">
-                        <div class="image-badge">
-                            <span class="badge bg-success" th:if="${car.status == 'AVAILABLE'}">Có sẵn</span>
-                            <span class="badge bg-warning" th:if="${car.status == 'RENTED'}">Đang thuê</span>
-                        </div>
-                    </div>
-                    <div class="thumbnail-images">
-                        <div class="row g-2">
-                            <div class="col-3">
-                                <img src="/placeholder.svg?height=100&width=150" alt="Thumbnail" class="img-fluid rounded">
-                            </div>
-                            <div class="col-3">
-                                <img src="/placeholder.svg?height=100&width=150" alt="Thumbnail" class="img-fluid rounded">
-                            </div>
-                            <div class="col-3">
-                                <img src="/placeholder.svg?height=100&width=150" alt="Thumbnail" class="img-fluid rounded">
-                            </div>
-                            <div class="col-3">
-                                <img src="/placeholder.svg?height=100&width=150" alt="Thumbnail" class="img-fluid rounded">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Car Details -->
-                <div class="car-details-section mt-5">
-                    <h2>Thông tin chi tiết</h2>
-                    <div class="row g-4 mt-2">
-                        <div class="col-md-6">
-                            <div class="detail-item">
-                                <i class="fas fa-car text-primary me-2"></i>
-                                <strong>Tên xe:</strong> <span th:text="${car.carName}">Toyota Camry</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="detail-item">
-                                <i class="fas fa-calendar text-primary me-2"></i>
-                                <strong>Năm sản xuất:</strong> <span th:text="${car.carModelYear}">2023</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="detail-item">
-                                <i class="fas fa-palette text-primary me-2"></i>
-                                <strong>Màu sắc:</strong> <span th:text="${car.color}">Trắng</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="detail-item">
-                                <i class="fas fa-users text-primary me-2"></i>
-                                <strong>Số chỗ:</strong> <span th:text="${car.capacity}">5</span> chỗ
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="detail-item">
-                                <i class="fas fa-industry text-primary me-2"></i>
-                                <strong>Hãng sản xuất:</strong> <span th:text="${car.producer.producerName}">Toyota</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="detail-item">
-                                <i class="fas fa-calendar-import text-primary me-2"></i>
-                                <strong>Ngày nhập:</strong> <span th:text="${#temporals.format(car.importDate, 'dd/MM/yyyy')}">01/01/2023</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <h5>Mô tả</h5>
-                        <p class="text-muted" th:text="${car.description}">
-                            Xe sedan hạng trung với thiết kế sang trọng, động cơ mạnh mẽ và tiết kiệm nhiên liệu. 
-                            Trang bị đầy đủ các tiện nghi hiện đại như điều hòa tự động, hệ thống giải trí, camera lùi...
-                        </p>
-                    </div>
-
-                    <!-- Features -->
-                    <div class="mt-4">
-                        <h5>Tính năng nổi bật</h5>
-                        <div class="features-grid">
-                            <div class="feature-item">
-                                <i class="fas fa-snowflake text-info"></i>
-                                <span>Điều hòa tự động</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-map-marked-alt text-success"></i>
-                                <span>GPS Navigation</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-bluetooth text-primary"></i>
-                                <span>Bluetooth</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-video text-warning"></i>
-                                <span>Camera lùi</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-shield-alt text-danger"></i>
-                                <span>Túi khí an toàn</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-usb text-secondary"></i>
-                                <span>Cổng USB</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Reviews Section -->
-                <div class="reviews-section mt-5">
-                    <h3>Đánh giá từ khách hàng</h3>
-                    <div class="rating-summary mb-4">
-                        <div class="row align-items-center">
-                            <div class="col-md-4">
-                                <div class="rating-score">
-                                    <span class="score">4.2</span>
-                                    <div class="stars">
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-muted"></i>
-                                    </div>
-                                    <p class="text-muted">15 đánh giá</p>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="rating-breakdown">
-                                    <div class="rating-bar">
-                                        <span>5 sao</span>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" style="width: 60%"></div>
-                                        </div>
-                                        <span>9</span>
-                                    </div>
-                                    <div class="rating-bar">
-                                        <span>4 sao</span>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" style="width: 20%"></div>
-                                        </div>
-                                        <span>3</span>
-                                    </div>
-                                    <div class="rating-bar">
-                                        <span>3 sao</span>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" style="width: 13%"></div>
-                                        </div>
-                                        <span>2</span>
-                                    </div>
-                                    <div class="rating-bar">
-                                        <span>2 sao</span>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" style="width: 7%"></div>
-                                        </div>
-                                        <span>1</span>
-                                    </div>
-                                    <div class="rating-bar">
-                                        <span>1 sao</span>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" style="width: 0%"></div>
-                                        </div>
-                                        <span>0</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Individual Reviews -->
-                    <div class="reviews-list">
-                        <div class="review-item" th:each="review : ${reviews}">
-                            <div class="review-header">
-                                <div class="reviewer-info">
-                                    <i class="fas fa-user-circle fa-2x text-muted me-2"></i>
-                                    <div>
-                                        <strong th:text="${review.customer.customerName}">Nguyễn Văn A</strong>
-                                        <div class="stars">
-                                            <i class="fas fa-star text-warning" th:each="i : ${#numbers.sequence(1, review.reviewStar)}"></i>
-                                            <i class="fas fa-star text-muted" th:each="i : ${#numbers.sequence(review.reviewStar + 1, 5)}"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <small class="text-muted">2 ngày trước</small>
-                            </div>
-                            <p class="review-comment" th:text="${review.comment}">
-                                Xe rất tốt, sạch sẽ và chạy êm. Nhân viên giao xe đúng giờ và thân thiện. 
-                                Tôi sẽ thuê lại lần sau.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <!-- Ảnh xe -->
+            <div class="col-lg-6 mb-4">
+                <img th:src="@{/images/cars/default.png}" alt="Car Image"
+                     class="img-fluid rounded shadow" />
+                <span class="badge mt-2"
+                      th:classappend="${car.status.name() == 'AVAILABLE'} ? 'bg-success' : 'bg-secondary'"
+                      th:text="${car.status.name() == 'AVAILABLE'} ? 'Có sẵn' : 'Đang thuê'"></span>
             </div>
 
-            <!-- Booking Sidebar -->
-            <div class="col-lg-4">
-                <div class="booking-card sticky-top">
-                    <div class="card border-0 shadow">
-                        <div class="card-body p-4">
-                            <div class="price-display mb-4">
-                                <span class="price-amount" th:text="${#numbers.formatCurrency(car.rentPrice)}">₫800,000</span>
-                                <span class="price-unit">/ngày</span>
-                            </div>
+            <!-- Thông tin và Form -->
+            <div class="col-lg-6">
+                <h2 th:text="${car.carName}">Tên xe</h2>
+                <p class="text-muted" th:text="${car.description}">Mô tả xe</p>
 
-                            <form th:action="@{/booking/create}" method="post" id="bookingForm">
-                                <input type="hidden" name="carId" th:value="${car.carId}">
-                                
-                                <div class="mb-3">
-                                    <label for="pickupDate" class="form-label">Ngày nhận xe</label>
-                                    <input type="date" class="form-control" id="pickupDate" name="pickupDate" 
-                                           th:value="${param.pickupDate ?: ''}" required>
-                                </div>
+                <ul class="list-unstyled mb-4">
+                    <li><strong>Năm sản xuất:</strong> <span th:text="${car.carModelYear}"></span></li>
+                    <li><strong>Số chỗ:</strong> <span th:text="${car.capacity}"></span></li>
+                    <li><strong>Màu sắc:</strong> <span th:text="${car.color}"></span></li>
+                    <li><strong>Hãng sản xuất:</strong> <span th:text="${car.producer.producerName}"></span></li>
+                    <li><strong>Ngày nhập:</strong> <span th:text="${#temporals.format(car.importDate, 'dd/MM/yyyy')}"></span></li>
+                    <li><strong>Giá thuê/ngày:</strong> <span th:text="${#numbers.formatCurrency(car.rentPrice)}"></span></li>
+                </ul>
 
-                                <div class="mb-3">
-                                    <label for="returnDate" class="form-label">Ngày trả xe</label>
-                                    <input type="date" class="form-control" id="returnDate" name="returnDate" 
-                                           th:value="${param.returnDate ?: ''}" required>
-                                </div>
+                <!-- Form Đặt Xe -->
+                <form th:action="@{/api/v1/customer/cars/rental}" method="post">
+                    <input type="hidden" name="carId" th:value="${car.carId}" />
 
-                                <div class="booking-summary mb-4">
-                                    <div class="summary-row">
-                                        <span>Số ngày thuê:</span>
-                                        <span id="totalDays">0 ngày</span>
-                                    </div>
-                                    <div class="summary-row">
-                                        <span>Giá thuê/ngày:</span>
-                                        <span th:text="${#numbers.formatCurrency(car.rentPrice)}">₫800,000</span>
-                                    </div>
-                                    <hr>
-                                    <div class="summary-row total">
-                                        <strong>Tổng cộng:</strong>
-                                        <strong id="totalPrice">₫0</strong>
-                                    </div>
-                                </div>
-
-                                <div class="d-grid gap-2">
-                                    <button type="submit" class="btn btn-primary btn-lg" 
-                                            th:disabled="${car.status != 'AVAILABLE'}">
-                                        <i class="fas fa-calendar-plus me-2"></i>
-                                        <span th:if="${car.status == 'AVAILABLE'}">Đặt xe ngay</span>
-                                        <span th:if="${car.status != 'AVAILABLE'}">Xe không khả dụng</span>
-                                    </button>
-                                    <button type="button" class="btn btn-outline-primary" onclick="addToWishlist()">
-                                        <i class="fas fa-heart me-2"></i>Thêm vào yêu thích
-                                    </button>
-                                </div>
-                            </form>
-
-                            <div class="contact-info mt-4">
-                                <hr>
-                                <h6>Cần hỗ trợ?</h6>
-                                <p class="text-muted mb-2">
-                                    <i class="fas fa-phone me-2"></i>Hotline: 1900 1234
-                                </p>
-                                <p class="text-muted">
-                                    <i class="fas fa-envelope me-2"></i>Email: support@fucarrental.com
-                                </p>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="pickupDate">Ngày nhận xe:</label>
+                        <input type="date" class="form-control" id="pickupDate" name="pickupDate" required />
                     </div>
 
-                    <!-- Safety Info -->
-                    <div class="card border-0 shadow mt-4">
-                        <div class="card-body p-4">
-                            <h6 class="mb-3">
-                                <i class="fas fa-shield-alt text-success me-2"></i>An toàn & Bảo hiểm
-                            </h6>
-                            <ul class="list-unstyled mb-0">
-                                <li class="mb-2">
-                                    <i class="fas fa-check text-success me-2"></i>Bảo hiểm toàn diện
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-check text-success me-2"></i>Kiểm tra kỹ thuật định kỳ
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-check text-success me-2"></i>Hỗ trợ 24/7
-                                </li>
-                                <li>
-                                    <i class="fas fa-check text-success me-2"></i>Đổi xe miễn phí nếu có sự cố
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="mb-3">
+                        <label for="returnDate">Ngày trả xe:</label>
+                        <input type="date" class="form-control" id="returnDate" name="returnDate" required />
                     </div>
-                </div>
+
+                    <div class="mb-3">
+                        <label>Số ngày thuê:</label>
+                        <span id="totalDays">0</span> ngày
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Tổng tiền:</label>
+                        <span id="totalPrice">₫0</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100"
+                            th:disabled="${car.status.name() != 'AVAILABLE'}">
+                        <i class="fas fa-car-side me-2"></i>
+                        <span th:if="${car.status.name() == 'AVAILABLE'}">Đặt xe ngay</span>
+                        <span th:if="${car.status.name() != 'AVAILABLE'}">Xe không khả dụng</span>
+                    </button>
+                </form>
+
+                <!-- Thông báo -->
+                <div th:if="${success}" class="alert alert-success mt-3" th:text="${success}"></div>
+                <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
             </div>
         </div>
     </div>
+
+    <!-- Script tính tiền -->
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const pickup = document.getElementById('pickupDate');
+            const ret = document.getElementById('returnDate');
+            const rentPrice = /*[[${car.rentPrice}]]*/ 0;
+
+            function updateTotal() {
+                const start = new Date(pickup.value);
+                const end = new Date(ret.value);
+                const oneDay = 1000 * 60 * 60 * 24;
+                const days = Math.ceil((end - start) / oneDay);
+
+                if (!isNaN(days) && days > 0) {
+                    document.getElementById('totalDays').textContent = days;
+                    const total = rentPrice * days;
+                    document.getElementById('totalPrice').textContent =
+                        new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }).format(total);
+                } else {
+                    document.getElementById('totalDays').textContent = '0';
+                    document.getElementById('totalPrice').textContent = '₫0';
+                }
+            }
+
+            pickup.addEventListener('change', updateTotal);
+            ret.addEventListener('change', updateTotal);
+        });
+    </script>
 </div>
 </html>
