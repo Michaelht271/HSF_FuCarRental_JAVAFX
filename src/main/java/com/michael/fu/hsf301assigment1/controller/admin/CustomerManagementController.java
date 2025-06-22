@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/api/v1/admin/customers")
 public class CustomerManagementController {
@@ -20,9 +23,14 @@ public class CustomerManagementController {
 
     @GetMapping("")
     public String list(Model model) {
-        model.addAttribute("customers", customerService.findAll());
+        List<Customer> allCustomers = customerService.findAll();
+        List<Customer> userCustomers = allCustomers.stream()
+                .filter(c -> "USER".equalsIgnoreCase(c.getAccount().getRole().name()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("customers", userCustomers);
         model.addAttribute("customer", new Customer());
-        return "admin/customers"; // Thymeleaf view: src/main/resources/templates/admin/customers.html
+        return "admin/customers";
     }
 
     @PostMapping("/add")

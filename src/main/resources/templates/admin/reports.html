@@ -24,15 +24,15 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form th:action="@{/admin/reports/generate}" method="post" class="row g-3">
+                <form th:action="@{/api/v1/admin/reports/generate}" method="post" class="row g-3">
                     <div class="col-md-4">
                         <label for="startDate" class="form-label">Từ ngày *</label>
-                        <input type="date" class="form-control" id="startDate" name="startDate" 
+                        <input type="date" class="form-control" id="startDate" name="startDate"
                                th:value="${param.startDate}" required>
                     </div>
                     <div class="col-md-4">
                         <label for="endDate" class="form-label">Đến ngày *</label>
-                        <input type="date" class="form-control" id="endDate" name="endDate" 
+                        <input type="date" class="form-control" id="endDate" name="endDate"
                                th:value="${param.endDate}" required>
                     </div>
                     <div class="col-md-4">
@@ -140,7 +140,7 @@
         <div th:if="${reportResults != null and !reportResults.empty}" class="card shadow">
             <div class="card-header">
                 <h6 class="m-0 font-weight-bold text-primary">
-                    Kết quả báo cáo từ <span th:text="${#temporals.format(startDate, 'dd/MM/yyyy')}"></span> 
+                    Kết quả báo cáo từ <span th:text="${#temporals.format(startDate, 'dd/MM/yyyy')}"></span>
                     đến <span th:text="${#temporals.format(endDate, 'dd/MM/yyyy')}"></span>
                 </h6>
             </div>
@@ -148,40 +148,40 @@
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead class="table-light">
-                            <tr>
-                                <th>Ngày</th>
-                                <th>Khách hàng</th>
-                                <th>Xe</th>
-                                <th>Ngày thuê</th>
-                                <th>Ngày trả</th>
-                                <th>Số ngày</th>
-                                <th>Tổng tiền</th>
-                                <th>Trạng thái</th>
-                            </tr>
+                        <tr>
+                            <th>Ngày</th>
+                            <th>Khách hàng</th>
+                            <th>Xe</th>
+                            <th>Ngày thuê</th>
+                            <th>Ngày trả</th>
+                            <th>Số ngày</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="result : ${reportResults}">
-                                <td th:text="${#temporals.format(result.createdDate, 'dd/MM/yyyy')}">01/01/2024</td>
-                                <td th:text="${result.customer.customerName}">Nguyễn Văn A</td>
-                                <td th:text="${result.car.carName}">Toyota Camry</td>
-                                <td th:text="${#temporals.format(result.pickupDate, 'dd/MM/yyyy')}">01/01/2024</td>
-                                <td th:text="${#temporals.format(result.returnDate, 'dd/MM/yyyy')}">05/01/2024</td>
-                                <td th:text="${result.totalDays}">4</td>
-                                <td class="text-success font-weight-bold" th:text="${#numbers.formatCurrency(result.rentPrice)}">₫3,200,000</td>
-                                <td>
+                        <tr th:each="result : ${reportResults}">
+                            <td th:text="${#temporals.format(result.rentDate, 'dd/MM/yyyy')}">01/01/2024</td>
+                            <td th:text="${result.customer.customerName}">Nguyễn Văn A</td>
+                            <td th:text="${result.car.carName}">Toyota Camry</td>
+                            <td th:text="${#temporals.format(result.rentDate, 'dd/MM/yyyy')}">01/01/2024</td>
+                            <td th:text="${#temporals.format(result.returnDate, 'dd/MM/yyyy')}">05/01/2024</td>
+                            <td th:text="${result.totalDays}">4</td>
+                            <td class="text-success font-weight-bold" th:text="${#numbers.formatCurrency(result.rentPrice)}">₫3,200,000</td>
+                            <td>
                                     <span th:class="'badge bg-' + (${result.status == 'COMPLETED'} ? 'success' : (${result.status == 'ACTIVE'} ? 'primary' : 'warning'))"
                                           th:text="${result.status == 'COMPLETED' ? 'Hoàn thành' : (result.status == 'ACTIVE' ? 'Đang thuê' : 'Chờ duyệt')}">
                                         Hoàn thành
                                     </span>
-                                </td>
-                            </tr>
+                            </td>
+                        </tr>
                         </tbody>
                         <tfoot class="table-light">
-                            <tr>
-                                <th colspan="6" class="text-end">Tổng cộng:</th>
-                                <th class="text-success" th:text="${#numbers.formatCurrency(totalAmount)}">₫45,200,000</th>
-                                <th></th>
-                            </tr>
+                        <tr>
+                            <th colspan="6" class="text-end">Tổng cộng:</th>
+                            <th class="text-success" th:text="${#numbers.formatCurrency(totalAmount)}">₫45,200,000</th>
+                            <th></th>
+                        </tr>
                         </tfoot>
                     </table>
                 </div>

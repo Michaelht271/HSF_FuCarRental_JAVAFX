@@ -38,7 +38,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="customer : ${customers}">cu
+                        <tr th:each="customer : ${customers}">
                             <td th:text="${customer.customerId}">1</td>
                             <td th:text="${customer.customerName}">Nguyễn Văn A</td>
                             <td th:text="${customer.email}">email@example.com</td>
@@ -48,12 +48,19 @@
                             <td th:text="${customer.licenceNumber}">B1234567</td>
                             <td th:text="${customer.licenceDate}">2020-05-10</td>
                             <td>
-                                <a class="btn btn-sm btn-warning"
-                                   th:href="@{/api/v1/admin/customers/edit/{id}(id=${customer.customerId})}"
-                                   data-bs-toggle="modal"
-                                   data-bs-target="#editCustomerModal">
-                                    <i class="fas fa-edit"></i>
-                                </a>
+                                <button class="btn btn-sm btn-primary"
+                                        th:attr="data-id=${customer.customerId},
+                                                     data-name=${customer.customerName},
+                                                     data-email=${customer.email},
+                                                     data-mobile=${customer.mobile},
+                                                     data-birthday=${customer.birthday},
+                                                     data-identify=${customer.identifyCard},
+                                                     data-licence=${customer.licenceNumber},
+                                                     data-licencedate=${customer.licenceDate}"
+                                        onclick="openEditModal(this)">
+                                    Sửa
+                                </button>
+
                                 <a class="btn btn-sm btn-danger"
                                    th:href="@{/api/v1/admin/customers/delete/{id}(id=${customer.customerId})}"
                                    onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này?');">
@@ -120,9 +127,8 @@
     <div class="modal fade" id="editCustomerModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form th:action="@{/api/v1/admin/customers/update}" method="post"
-                      th:object="${customer}">
-                    <input type="hidden" th:field="*{customerId}"/>
+                <form th:action="@{/api/v1/admin/customers/update}" method="post">
+                    <input type="hidden" name="customerId"/>
                     <div class="modal-header">
                         <h5 class="modal-title">Cập nhật thông tin</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -130,31 +136,31 @@
                     <div class="modal-body row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Tên khách hàng</label>
-                            <input type="text" class="form-control" th:field="*{customerName}" required>
+                            <input type="text" class="form-control" name="customerName" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control" th:field="*{email}" required>
+                            <input type="email" class="form-control" name="email" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Số điện thoại</label>
-                            <input type="tel" class="form-control" th:field="*{mobile}" required>
+                            <input type="tel" class="form-control" name="mobile" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Ngày sinh</label>
-                            <input type="date" class="form-control" th:field="*{birthday}" required>
+                            <input type="date" class="form-control" name="birthday" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">CMND/CCCD</label>
-                            <input type="text" class="form-control" th:field="*{identifyCard}" required>
+                            <input type="text" class="form-control" name="identifyCard" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Số bằng lái</label>
-                            <input type="text" class="form-control" th:field="*{licenceNumber}" required>
+                            <input type="text" class="form-control" name="licenceNumber" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Ngày cấp bằng</label>
-                            <input type="date" class="form-control" th:field="*{licenceDate}" required>
+                            <input type="date" class="form-control" name="licenceDate" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -165,7 +171,23 @@
             </div>
         </div>
     </div>
+
 </section>
 
 </body>
 </html>
+<script>
+    function openEditModal(button) {
+        const modal = document.getElementById('editCustomerModal');
+        modal.querySelector('input[name="customerId"]').value = button.dataset.id;
+        modal.querySelector('input[name="customerName"]').value = button.dataset.name;
+        modal.querySelector('input[name="email"]').value = button.dataset.email;
+        modal.querySelector('input[name="mobile"]').value = button.dataset.mobile;
+        modal.querySelector('input[name="birthday"]').value = button.dataset.birthday;
+        modal.querySelector('input[name="identifyCard"]').value = button.dataset.identify;
+        modal.querySelector('input[name="licenceNumber"]').value = button.dataset.licence;
+        modal.querySelector('input[name="licenceDate"]').value = button.dataset.licencedate;
+
+        new bootstrap.Modal(modal).show();
+    }
+</script>

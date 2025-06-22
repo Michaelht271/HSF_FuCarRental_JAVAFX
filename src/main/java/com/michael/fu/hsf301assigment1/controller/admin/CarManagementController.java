@@ -11,17 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 @RequestMapping("/api/v1/admin/cars")
-public class CarRentalController extends BaseController {
+public class CarManagementController extends BaseController {
+
     private final CarService carService;
     private final ProducerService producerService;
     private static final String RETURN_LINK = "redirect:/api/v1/admin/cars"; // Đường dẫn tới view danh sách xe
     @Autowired
-    public CarRentalController(CarService carService, ProducerService producerService) {
-            this.carService = carService;
-            this.producerService = producerService;
+    public CarManagementController(CarService carService, ProducerService producerService) {
+        this.carService = carService;
+        this.producerService = producerService;
     }
 
     @GetMapping(path={"/",""})
@@ -68,5 +68,4 @@ public class CarRentalController extends BaseController {
         }
         return RETURN_LINK; // redirect to list
     }
-
 }

@@ -81,7 +81,7 @@ public class CustomerService extends BaseService implements UserDetailsService  
     }
 
     public void update(Customer customer) {
-        Customer existingCustomer = customerRepository.findByEmail(customer.getCustomerId().toString());
+        Customer existingCustomer = customerRepository.findByEmail(customer.getEmail());
         if(existingCustomer == null) {
             logger.warn("Customer with ID {} not found for update", customer.getCustomerId());
             return;
