@@ -1,8 +1,7 @@
 package com.michael.fu.hsf301assigment1.config;
 
-import com.michael.fu.hsf301assigment1.entity.Customer;
 import com.michael.fu.hsf301assigment1.service.impl.CustomerService;
-import lombok.AllArgsConstructor;
+import com.michael.fu.hsf301assigment1.session.CustomerSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
 
 /**
  * SecurityConfig chịu trách nhiệm cấu hình bảo mật cho ứng dụng.
@@ -29,43 +27,30 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @Configuration // Đánh dấu đây là một lớp cấu hình Spring.
 @EnableWebSecurity // Bật tính năng bảo mật Web trong Spring Security.
 // Tự động tạo constructor cho các final fields.
-public class SecurityConfig {
-    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+public class SecurityConfig extends  BaseConfig{
 
-    // Dịch vụ người dùng tùy chỉnh, dùng để truy vấn người dùng từ DB.
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
     private final CustomerService appUserService;
     private final CustomerSession customerSession;
+    private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SecurityConfig(CustomerService appUserService, CustomerSession customerSession) {
+    public SecurityConfig(CustomerService appUserService,
+                          CustomerSession customerSession,
+                          UserDetailsService userDetailsService,
+                          PasswordEncoder passwordEncoder) {
         this.appUserService = appUserService;
         this.customerSession = customerSession;
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    /**
-     * Bean UserDetailsService dùng để Spring gọi khi xác thực người dùng.
-     * Ở đây trả về CustomerService đã implement UserDetailsService.
-     */
     @Bean
-    public UserDetailsService userDetailsService() {
-        logger.info("Khởi tạo Bean UserDetailsService với CustomerService.");
-        return appUserService;
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new MyAuthenticationSuccessHandler(appUserService, customerSession);
     }
 
-    /**
-     * Bean PasswordEncoder sử dụng thuật toán BCrypt để mã hóa mật khẩu.
-     * Được sử dụng trong quá trình xác thực (so sánh mật khẩu).
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        logger.info("Khởi tạo Bean PasswordEncoder với BCrypt.");
-        return new BCryptPasswordEncoder();
-    }
-
-    /**
-     * Cấu hình AuthenticationManager bằng cách kết hợp UserDetailsService và PasswordEncoder.
-     * Đây là nơi xử lý xác thực người dùng bằng dữ liệu từ DB.
-     */
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
         logger.info("Đang cấu hình AuthenticationManager.");
@@ -76,8 +61,8 @@ public class SecurityConfig {
 
         // Cung cấp UserDetailsService và PasswordEncoder để xác thực
         authenticationManagerBuilder
-                .userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder());
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
 
         logger.info("Hoàn tất cấu hình AuthenticationManager.");
         return authenticationManagerBuilder.build();
@@ -86,40 +71,6 @@ public class SecurityConfig {
     /**
      * Bean xử lý sau khi xác thực thành công.
      * Tùy theo role của người dùng, sẽ redirect đến trang khác nhau.
-     */
-    @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(CustomerService customerService,
-                                                                       CustomerSession customerSession) {
-        logger.info("Khởi tạo Bean AuthenticationSuccessHandler để điều hướng theo Role.");
-
-        return (request, response, authentication) -> {
-            String email = authentication.getName(); // Email chính là username
-            Customer customer = customerService.findCustomerByEmail(email); // Lấy Customer từ DB
-
-            if (customer != null) {
-                customerSession.setCustomer(customer); // Lưu vào Session
-                customerSession.setAuthenticated(true);
-                logger.info("Customer lưu vào session: {}", customer.getEmail());
-            }
-
-            // Chuyển hướng theo role
-            for (GrantedAuthority authority : authentication.getAuthorities()) {
-                String role = authority.getAuthority();
-                if ("ROLE_ADMIN".equals(role)) {
-                    response.sendRedirect("/api/v1/admin/dashboard");
-                    return;
-                } else if ("ROLE_USER".equals(role)) {
-                    response.sendRedirect("/api/v1/customers/home");
-                    return;
-                }
-            }
-
-            // Nếu không có role hợp lệ
-            response.sendRedirect("/api/v1/public/");
-        };
-    }
-
-    /**
      * Bean cấu hình bộ lọc bảo mật chính.
      * Bao gồm cấu hình phân quyền, login, logout và CSRF.
      */
@@ -148,12 +99,11 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-
                 // Cấu hình trang login tùy chỉnh
                 .formLogin(login -> login
                         .loginPage("/api/v1/public/login") // URL GET trang login
                         .loginProcessingUrl("/api/v1/public/process-login") // URL POST xử lý login
-                        .successHandler(myAuthenticationSuccessHandler(appUserService, customerSession)) // Xử lý sau login thành công
+                        .successHandler(authenticationSuccessHandler()) // Xử lý sau login thành công
                         .failureUrl("/api/v1/public/login?error")
                         .permitAll()
                 )

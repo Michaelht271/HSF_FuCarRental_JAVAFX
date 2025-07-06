@@ -10,15 +10,17 @@ import lombok.*;
 @Setter
 public class Review {
 
-    @EmbeddedId
-    private CarCustomerID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ReviewID")
+    private long reviewId;
     @ManyToOne
-    @MapsId("carId")
+
     @JoinColumn(name = "carId")
     private Car car;
 
     @ManyToOne
-    @MapsId("customerId")            // ĐÚNG tên thuộc tính trong CarCustomerID
+               // ĐÚNG tên thuộc tính trong CarCustomerID
     @JoinColumn(name = "customerId")
     private Customer customer;
 

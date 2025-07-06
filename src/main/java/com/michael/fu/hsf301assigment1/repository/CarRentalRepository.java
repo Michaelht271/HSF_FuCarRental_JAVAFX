@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface CarRentalRepository extends JpaRepository<CarRental, CarCustomerID> {
+public interface CarRentalRepository extends JpaRepository<CarRental, Long> {
 
 
     List<CarRental> findByCustomer_CustomerId(Long customerId);
@@ -18,4 +18,6 @@ public interface CarRentalRepository extends JpaRepository<CarRental, CarCustome
 
 
     CarRental findByCustomerAndCar(Customer existingCustomer, Car car);
+
+    boolean existsByCarAndStatusInAndReturnDateAfter(Car existingCar, List<CarRentalStatus> pending, LocalDate pickup);
 }

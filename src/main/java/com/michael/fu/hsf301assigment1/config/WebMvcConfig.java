@@ -6,7 +6,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 @Configuration
-public class ThymeleafConfig {
+public class WebMvcConfig extends BaseConfig{
 
     @Bean
     public ThymeleafViewResolver thymeleafViewResolver(SpringTemplateEngine templateEngine) {

@@ -1,6 +1,6 @@
 package com.michael.fu.hsf301assigment1.controller.customer;
 
-import com.michael.fu.hsf301assigment1.config.CustomerSession;
+import com.michael.fu.hsf301assigment1.session.CustomerSession;
 import com.michael.fu.hsf301assigment1.entity.CarRental;
 import com.michael.fu.hsf301assigment1.entity.CarRentalStatus;
 import com.michael.fu.hsf301assigment1.entity.Customer;

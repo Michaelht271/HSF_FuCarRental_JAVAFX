@@ -29,6 +29,7 @@ public class RentalManagementController extends BaseController {
     public String rentals(Model model) {
         List<CarRental> rentals = carRentalService.findAll();
         model.addAttribute("rentals", rentals);
+
         return "admin/rentals";
     }
 
@@ -47,4 +48,8 @@ public class RentalManagementController extends BaseController {
         }
         return "redirect:/api/v1/admin/rentals";
     }
+
+
+
+
 }

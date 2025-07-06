@@ -12,30 +12,28 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+
 public class CarRental {
 
-    @EmbeddedId
-    private CarCustomerID id;
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @Column(name = "CarRentalId")
+    private long carRentalId;
 
     @ManyToOne
-    @MapsId("carId")
     @JoinColumn(name = "carId")
     private Car car;
 
     @ManyToOne
-    @MapsId("customerId")
     @JoinColumn(name = "customerId")
     private Customer customer;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "RentDate")// tốt hơn nên thêm
+    @Column(name = "RentDate", nullable = false)
     private LocalDate rentDate;
 
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "ReturnDate")
+    @Column(name = "ReturnDate", nullable = false)
     private LocalDate returnDate;
+
 
     @Column(name="RentPrice", columnDefinition = "DECIMAL(18,2)")
     private double rentPrice;

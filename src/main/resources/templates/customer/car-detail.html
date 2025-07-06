@@ -13,8 +13,8 @@
         <div class="row">
             <!-- Ảnh xe -->
             <div class="col-lg-6 mb-4">
-                <img th:src="@{/images/cars/default.png}" alt="Car Image"
-                     class="img-fluid rounded shadow" />
+                <img th:src="''"
+                     alt="Car Image" class="img-fluid rounded shadow" />
                 <span class="badge mt-2"
                       th:classappend="${car.status.name() == 'AVAILABLE'} ? 'bg-success' : 'bg-secondary'"
                       th:text="${car.status.name() == 'AVAILABLE'} ? 'Có sẵn' : 'Đang thuê'"></span>
@@ -35,17 +35,20 @@
                 </ul>
 
                 <!-- Form Đặt Xe -->
-                <form th:action="@{/api/v1/customer/cars/rental}" method="post">
+                <form th:action="@{/api/v1/customers/cars/rental}" method="post">
                     <input type="hidden" name="carId" th:value="${car.carId}" />
 
                     <div class="mb-3">
                         <label for="pickupDate">Ngày nhận xe:</label>
-                        <input type="date" class="form-control" id="pickupDate" name="pickupDate" required />
+                        <input type="date" class="form-control" id="pickupDate" name="pickupDate" required
+                               th:attr="min=${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+                               aria-label="Ngày nhận xe" placeholder="Chọn ngày nhận" />
                     </div>
 
                     <div class="mb-3">
                         <label for="returnDate">Ngày trả xe:</label>
-                        <input type="date" class="form-control" id="returnDate" name="returnDate" required />
+                        <input type="date" class="form-control" id="returnDate" name="returnDate" required
+                               aria-label="Ngày trả xe" placeholder="Chọn ngày trả" />
                     </div>
 
                     <div class="mb-3">
@@ -55,8 +58,9 @@
 
                     <div class="mb-3">
                         <label>Tổng tiền:</label>
-                        <span id="totalPrice">₫0</span>
+                        <span  id="totalPrice">₫0</span>
                     </div>
+                    <input type="hidden" name="rentPrice" th:value="${car.rentPrice}" />
 
                     <button type="submit" class="btn btn-primary w-100"
                             th:disabled="${car.status.name() != 'AVAILABLE'}">
@@ -66,9 +70,8 @@
                     </button>
                 </form>
 
-                <!-- Thông báo -->
-                <div th:if="${success}" class="alert alert-success mt-3" th:text="${success}"></div>
-                <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
+                <!-- Alert Thông báo -->
+                <div th:replace="~{fragments/alert :: alert}"></div>
             </div>
         </div>
     </div>
@@ -81,6 +84,8 @@
             const rentPrice = /*[[${car.rentPrice}]]*/ 0;
 
             function updateTotal() {
+                if (!pickup.value || !ret.value) return;
+
                 const start = new Date(pickup.value);
                 const end = new Date(ret.value);
                 const oneDay = 1000 * 60 * 60 * 24;
@@ -100,7 +105,10 @@
                 }
             }
 
-            pickup.addEventListener('change', updateTotal);
+            pickup.addEventListener('change', function () {
+                ret.min = pickup.value;
+                updateTotal();
+            });
             ret.addEventListener('change', updateTotal);
         });
     </script>

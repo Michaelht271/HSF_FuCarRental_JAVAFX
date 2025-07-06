@@ -11,7 +11,7 @@ import java.util.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+
 public class Car {
     //(CarID, CarName, CarModelYear, Color, Capacity, Description, ImportDate, ProducerID, RentPrice, Status)
     @Id

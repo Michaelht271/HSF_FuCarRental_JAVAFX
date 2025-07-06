@@ -90,21 +90,21 @@ function deleteCustomer(customerId) {
         "X-Requested-With": "XMLHttpRequest",
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          showAlert("Xóa khách hàng thành công!", "success")
-          setTimeout(() => {
-            location.reload()
-          }, 1000)
-        } else {
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            showAlert("Xóa khách hàng thành công!", "success")
+            setTimeout(() => {
+              location.reload()
+            }, 1000)
+          } else {
+            showAlert("Có lỗi xảy ra khi xóa khách hàng!", "danger")
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error)
           showAlert("Có lỗi xảy ra khi xóa khách hàng!", "danger")
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error)
-        showAlert("Có lỗi xảy ra khi xóa khách hàng!", "danger")
-      })
+        })
   }
 }
 
@@ -126,21 +126,21 @@ function deleteCar(carId) {
         "X-Requested-With": "XMLHttpRequest",
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          showAlert(data.message, "success")
-          setTimeout(() => {
-            location.reload()
-          }, 1000)
-        } else {
-          showAlert(data.message || "Có lỗi xảy ra khi xóa xe!", "danger")
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error)
-        showAlert("Có lỗi xảy ra khi xóa xe!", "danger")
-      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            showAlert(data.message, "success")
+            setTimeout(() => {
+              location.reload()
+            }, 1000)
+          } else {
+            showAlert(data.message || "Có lỗi xảy ra khi xóa xe!", "danger")
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error)
+          showAlert("Có lỗi xảy ra khi xóa xe!", "danger")
+        })
   }
 }
 
@@ -162,21 +162,21 @@ function approveRental(rentalId) {
         "X-Requested-With": "XMLHttpRequest",
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          showAlert("Duyệt giao dịch thành công!", "success")
-          setTimeout(() => {
-            location.reload()
-          }, 1000)
-        } else {
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            showAlert("Duyệt giao dịch thành công!", "success")
+            setTimeout(() => {
+              location.reload()
+            }, 1000)
+          } else {
+            showAlert("Có lỗi xảy ra khi duyệt giao dịch!", "danger")
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error)
           showAlert("Có lỗi xảy ra khi duyệt giao dịch!", "danger")
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error)
-        showAlert("Có lỗi xảy ra khi duyệt giao dịch!", "danger")
-      })
+        })
   }
 }
 
@@ -189,21 +189,21 @@ function cancelRental(rentalId) {
         "X-Requested-With": "XMLHttpRequest",
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          showAlert("Hủy giao dịch thành công!", "success")
-          setTimeout(() => {
-            location.reload()
-          }, 1000)
-        } else {
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            showAlert("Hủy giao dịch thành công!", "success")
+            setTimeout(() => {
+              location.reload()
+            }, 1000)
+          } else {
+            showAlert("Có lỗi xảy ra khi hủy giao dịch!", "danger")
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error)
           showAlert("Có lỗi xảy ra khi hủy giao dịch!", "danger")
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error)
-        showAlert("Có lỗi xảy ra khi hủy giao dịch!", "danger")
-      })
+        })
   }
 }
 
@@ -265,9 +265,9 @@ function debounce(func, wait) {
 const searchInputs = document.querySelectorAll('input[name="search"]')
 searchInputs.forEach((input) => {
   input.addEventListener(
-    "input",
-    debounce(function () {
-      this.form.submit()
-    }, 500),
+      "input",
+      debounce(function () {
+        this.form.submit()
+      }, 500),
   )
 })

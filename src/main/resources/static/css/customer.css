@@ -111,7 +111,7 @@ body {
 
 /* Main Content */
 .main-content {
-  margin-top: 76px;
+  margin-top: 50px;
   min-height: calc(100vh - 76px);
 }
 

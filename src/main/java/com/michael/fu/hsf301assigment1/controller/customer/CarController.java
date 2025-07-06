@@ -1,6 +1,6 @@
 package com.michael.fu.hsf301assigment1.controller.customer;
 
-import com.michael.fu.hsf301assigment1.config.CustomerSession;
+import com.michael.fu.hsf301assigment1.session.CustomerSession;
 import com.michael.fu.hsf301assigment1.controller.BaseController;
 import com.michael.fu.hsf301assigment1.entity.*;
 import com.michael.fu.hsf301assigment1.service.impl.CarRentalService;
@@ -95,53 +95,6 @@ public class CarController extends BaseController {
 
         model.addAttribute("car", car);
         return "customer/car-detail";
-    }
-
-    /**
-     * Đặt xe (gửi form POST).
-     */
-
-    @PostMapping("/cars/rental")
-    public String rentCar(
-            @RequestParam("carId") Long carId,
-            @RequestParam("pickupDate") String pickupDate,
-            @RequestParam("returnDate") String returnDate,
-            RedirectAttributes redirectAttributes) {
-
-        logger.info("Bắt đầu xử lý đặt xe: carId={}, pickupDate={}, returnDate={}", carId, pickupDate, returnDate);
-
-        Customer sessionCustomer = customerSession.getCustomer();
-
-        if (sessionCustomer == null) {
-            logger.warn("Không tìm thấy khách hàng trong session.");
-            redirectAttributes.addFlashAttribute("error", "Vui lòng đăng nhập để thuê xe.");
-            return "redirect:/api/v1/public/login";
-        }
-
-        Customer customer = customerService.findById(sessionCustomer.getCustomerId());
-        if (customer == null) {
-            logger.error("Không tìm thấy thông tin khách hàng trong database với ID={}", sessionCustomer.getCustomerId());
-            redirectAttributes.addFlashAttribute("error", "Không tìm thấy thông tin khách hàng.");
-            return "redirect:/api/v1/public/login";
-        }
-
-        Car car = carService.findById(carId);
-        if (car == null || car.getStatus() != CarStatus.AVAILABLE) {
-            logger.warn("Xe không khả dụng hoặc không tồn tại. carId={}, status={}", carId, (car != null ? car.getStatus() : "null"));
-            redirectAttributes.addFlashAttribute("error", "Xe không khả dụng hoặc không tồn tại.");
-            return "redirect:/api/v1/customer/cars";
-        }
-
-        try {
-            carRentalService.rentailCar(customer, car, pickupDate, returnDate);
-            logger.info("Đặt xe thành công cho khách hàng ID={}, xe ID={}", customer.getCustomerId(), carId);
-            redirectAttributes.addFlashAttribute("success", "Đặt xe thành công!");
-        } catch (Exception e) {
-            logger.error("Lỗi khi đặt xe: {}", e.getMessage(), e);
-            redirectAttributes.addFlashAttribute("error", "Đặt xe thất bại: " + e.getMessage());
-        }
-
-        return "redirect:/api/v1/customer/cars";
     }
 
 
