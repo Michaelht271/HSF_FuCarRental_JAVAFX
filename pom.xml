@@ -11,8 +11,8 @@
     <groupId>com.michael.fu</groupId>
     <artifactId>hsf301Assigment1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>hsf301Assigment1</name>
-    <description>hsf301Assigment1</description>
+    <name>hsf301Assigment2</name>
+    <description>hsf301Assigment2</description>
     <url/>
     <licenses>
         <license/>
@@ -28,6 +28,7 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+        <javafx.version>21.0.2</javafx.version> <!-- Standardized property name -->
     </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
@@ -89,7 +90,6 @@
             <version>3.1.1</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
@@ -127,7 +127,27 @@
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
-
+        <!-- JavaFX modules -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -145,7 +165,6 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
-
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -159,7 +178,15 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <!-- JavaFX Maven Plugin -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>com.michael.fu.hsf301Assigment2/com.michael.fu.hsf301assigment2.MainApp</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 </project>

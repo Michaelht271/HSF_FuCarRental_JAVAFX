@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Hyperlink?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.LoginControllerFX"
+      alignment="TOP_CENTER"
+      spacing="20"
+      style="-fx-background-color: #f0f0f0;"
+>
+
+    <!-- padding xung quanh cả form -->
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <!-- Tiêu đề form -->
+    <Label text="Đăng nhập hệ thống"
+           style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+
+    <!-- Form với GridPane -->
+    <GridPane hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" minWidth="80"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <!-- Email -->
+        <Label text="Email:"
+               GridPane.rowIndex="0" GridPane.columnIndex="0"
+               style="-fx-text-fill: #333; -fx-font-weight: bold;"/>
+        <TextField fx:id="usernameField"
+                   promptText="Nhập email"
+                   GridPane.rowIndex="0" GridPane.columnIndex="1"
+                   style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 4;"/>
+
+        <!-- Mật khẩu -->
+        <Label text="Mật khẩu:"
+               GridPane.rowIndex="1" GridPane.columnIndex="0"
+               style="-fx-text-fill: #333; -fx-font-weight: bold;"/>
+        <PasswordField fx:id="passwordField"
+                       promptText="Nhập mật khẩu"
+                       GridPane.rowIndex="1" GridPane.columnIndex="1"
+                       style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 4;"/>
+    </GridPane>
+
+    <!-- Thông báo lỗi -->
+    <Label fx:id="errorLabel"
+           textFill="red"
+           visible="false"
+           wrapText="true"
+           maxWidth="250"
+           style="-fx-font-style: italic;"/>
+
+    <!-- Nút đăng nhập -->
+    <Button text="Đăng nhập"
+            onAction="#handleLogin"
+            maxWidth="120"
+            style="-fx-background-color: linear-gradient(#6db3f2, #1e69de);
+                   -fx-text-fill: white;
+                   -fx-font-weight: bold;
+                   -fx-background-radius: 4;
+                   -fx-cursor: hand;"
+    />
+    <Hyperlink text="Chưa có tài khoản? Đăng ký"
+               onAction="#goToRegister"/>
+</VBox>

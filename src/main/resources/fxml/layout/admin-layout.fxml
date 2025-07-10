@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.admin.AdminDashboardController"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <!-- Sidebar -->
+    <left>
+        <VBox style="-fx-background-color: #343a40;" spacing="10" prefWidth="220" alignment="TOP_LEFT" padding="10">
+            <Label text="🚗 FU Car Rental" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold"/>
+
+            <Button text="Dashboard" prefWidth="200" style="-fx-background-color: transparent; -fx-text-fill: white" onAction="#goToDashboard"/>
+            <Button text="Quản lý khách hàng" prefWidth="200" style="-fx-background-color: transparent; -fx-text-fill: white" onAction="#goToCustomer"/>
+            <Button text="Quản lý xe" prefWidth="200" style="-fx-background-color: transparent; -fx-text-fill: white" onAction="#goToCar"/>
+            <Button text="Quản lý thuê xe" prefWidth="200" style="-fx-background-color: transparent; -fx-text-fill: white" onAction="#goToRental"/>
+            <Button text="Báo cáo thống kê" prefWidth="200" style="-fx-background-color: transparent; -fx-text-fill: white" onAction="#goToReport"/>
+            <Button text="Cài đặt" prefWidth="200" style="-fx-background-color: transparent; -fx-text-fill: white" onAction="#goToSettings"/>
+
+            <VBox alignment="BOTTOM_LEFT" spacing="5" style="-fx-padding: 20 0 0 0;">
+                <Label text="Admin User" style="-fx-text-fill: white"/>
+                <Label text="admin@fucarrental.com" style="-fx-text-fill: lightgray; -fx-font-size: 11px"/>
+                <Button text="Đăng xuất" style="-fx-background-color: red; -fx-text-fill: white" onAction="#logout"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Top Navbar -->
+    <top>
+        <HBox style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-padding: 10;" alignment="CENTER_RIGHT" spacing="10">
+            <Label text="Chào mừng trở lại, Admin" style="-fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <!-- Main Content -->
+    <center>
+        <VBox spacing="20" alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="BẢNG ĐIỀU KHIỂN"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold"/>
+
+            <GridPane hgap="20" vgap="20">
+                <columnConstraints>
+                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"/>
+                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints valignment="CENTER"/>
+                    <RowConstraints valignment="CENTER"/>
+                </rowConstraints>
+
+                <VBox GridPane.rowIndex="0" GridPane.columnIndex="0"
+                      style="-fx-background-color: #007bff; -fx-padding: 15; -fx-background-radius: 5;">
+                    <Label text="Khách hàng" textFill="white" style="-fx-font-size: 16px"/>
+                    <Label fx:id="lblTotalCustomers" text="0" textFill="white" style="-fx-font-size: 24px"/>
+                </VBox>
+
+                <VBox GridPane.rowIndex="0" GridPane.columnIndex="1"
+                      style="-fx-background-color: #28a745; -fx-padding: 15; -fx-background-radius: 5;">
+                    <Label text="Số xe" textFill="white" style="-fx-font-size: 16px"/>
+                    <Label fx:id="lblTotalCars" text="0" textFill="white" style="-fx-font-size: 24px"/>
+                </VBox>
+
+                <VBox GridPane.rowIndex="1" GridPane.columnIndex="0"
+                      style="-fx-background-color: #17a2b8; -fx-padding: 15; -fx-background-radius: 5;">
+                    <Label text="Giao dịch tháng này" textFill="white" style="-fx-font-size: 16px"/>
+                    <Label fx:id="lblMonthlyRentals" text="0" textFill="white" style="-fx-font-size: 24px"/>
+                </VBox>
+
+                <VBox GridPane.rowIndex="1" GridPane.columnIndex="1"
+                      style="-fx-background-color: #ffc107; -fx-padding: 15; -fx-background-radius: 5;">
+                    <Label text="Doanh thu tháng này" textFill="white" style="-fx-font-size: 16px"/>
+                    <Label fx:id="lblMonthlyRevenue" text="₫0" textFill="white" style="-fx-font-size: 24px"/>
+                </VBox>
+            </GridPane>
+        </VBox>
+    </center>
+</BorderPane>

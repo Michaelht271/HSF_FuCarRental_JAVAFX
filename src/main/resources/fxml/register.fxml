@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.RegisterControllerFX"
+            prefWidth="500" prefHeight="600">
+
+    <children>
+        <VBox AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20" spacing="15" alignment="TOP_CENTER">
+
+            <Label text="Đăng ký tài khoản" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="10" vgap="10" maxWidth="450">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="30" halignment="RIGHT"/>
+                    <ColumnConstraints percentWidth="70" hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <!-- Họ tên -->
+                <Label text="Họ và tên:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="nameField"
+                           promptText="Nhập họ và tên"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <!-- Email -->
+                <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="emailField"
+                           promptText="Nhập email"
+                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <!-- SĐT -->
+                <Label text="SĐT:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="mobileField"
+                           promptText="Nhập số điện thoại"
+                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <!-- Ngày sinh -->
+                <Label text="Ngày sinh:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="birthdayPicker"
+                            GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <!-- CMND/CCCD -->
+                <Label text="CMND/CCCD:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="identityField"
+                           promptText="Nhập CMND/CCCD"
+                           GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <!-- Bằng lái -->
+                <Label text="Bằng lái:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="licenceField"
+                           promptText="Nhập số bằng lái"
+                           GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <!-- Ngày cấp -->
+                <Label text="Ngày cấp:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="licenceDatePicker"
+                            GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                <!-- Mật khẩu -->
+                <Label text="Mật khẩu:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="passwordField"
+                               promptText="Tối thiểu 6 ký tự"
+                               GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                <!-- Xác nhận mật khẩu -->
+                <Label text="Xác nhận:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="confirmField"
+                               promptText="Nhập lại mật khẩu"
+                               GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <!-- Thông báo lỗi / thông báo thành công -->
+            <Label fx:id="messageLabel"
+                   wrapText="true" textFill="red" maxWidth="450"/>
+
+            <!-- Nút đăng ký -->
+            <Button text="Đăng ký"
+                    onAction="#handleRegister"
+                    maxWidth="120"
+                    style="-fx-background-color: linear-gradient(#6db3f2,#1e69de);-fx-text-fill:white;"/>
+
+            <!-- Link quay về login -->
+            <Hyperlink text="← Quay về Đăng nhập"
+                       onAction="#goToLogin"/>
+        </VBox>
+    </children>
+</AnchorPane>
