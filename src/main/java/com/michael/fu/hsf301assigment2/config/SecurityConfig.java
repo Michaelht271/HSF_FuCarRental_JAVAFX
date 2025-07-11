@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -50,24 +51,15 @@ public class SecurityConfig extends  BaseConfig{
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new MyAuthenticationSuccessHandler(appUserService, customerSession);
     }
-
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
-        logger.info("Đang cấu hình AuthenticationManager.");
-
-        // Lấy builder để cấu hình xác thực
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
-
-        // Cung cấp UserDetailsService và PasswordEncoder để xác thực
-        authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
-
-        logger.info("Hoàn tất cấu hình AuthenticationManager.");
-        return authenticationManagerBuilder.build();
     }
-
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
     /**
      * Bean xử lý sau khi xác thực thành công.
      * Tùy theo role của người dùng, sẽ redirect đến trang khác nhau.
@@ -77,10 +69,7 @@ public class SecurityConfig extends  BaseConfig{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         logger.info("Bắt đầu cấu hình SecurityFilterChain.");
-
         http
-                // Đăng ký AuthenticationManager đã build thủ công
-                .authenticationManager(authenticationManager(http))
 
                 // Cấu hình phân quyền cho từng URL
                 .authorizeHttpRequests(auth -> auth

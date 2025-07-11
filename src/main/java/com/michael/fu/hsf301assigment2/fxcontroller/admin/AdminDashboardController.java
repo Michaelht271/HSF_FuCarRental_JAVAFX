@@ -3,29 +3,27 @@ package com.michael.fu.hsf301assigment2.fxcontroller.admin;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
-
 import com.michael.fu.hsf301assigment2.service.impl.CarRentalService;
 import com.michael.fu.hsf301assigment2.service.impl.CustomerService;
 import com.michael.fu.hsf301assigment2.service.impl.CarService;
-
 import java.time.LocalDate;
 import java.time.YearMonth;
 
 @Controller
 public class AdminDashboardController {
-
+    Logger logger = LoggerFactory.getLogger(AdminDashboardController.class);
     @FXML private Label lblTotalCustomers;
     @FXML private Label lblTotalCars;
     @FXML private Label lblMonthlyRentals;
     @FXML private Label lblMonthlyRevenue;
+
 
     private final CustomerService customerService;
     private final CarService carService;
@@ -102,7 +100,7 @@ public class AdminDashboardController {
             Parent view = loader.load();
             mainLayout.setCenter(view);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Can not load FXML: {} {} ", path, e.getMessage());
         }
     }
 
