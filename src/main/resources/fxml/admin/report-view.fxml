@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.admin.ReportControllerFX"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <top>
+        <VBox spacing="10" >
+            <padding>
+                <Insets top="20" left="20" bottom="20" right="20"/>
+            </padding>
+            <Label text="📊 Báo cáo thống kê" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
+
+            <HBox spacing="10">
+                <VBox spacing="5">
+                    <Label text="Từ ngày:"/>
+                    <DatePicker fx:id="startDatePicker"/>
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="Đến ngày:"/>
+                    <DatePicker fx:id="endDatePicker"/>
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="Loại báo cáo:"/>
+                    <ComboBox fx:id="reportTypeCombo"/>
+                </VBox>
+
+                <Button text="Tạo báo cáo" onAction="#handleGenerateReport"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="reportTable">
+            <columns>
+                <TableColumn text="Ngày" fx:id="colDate"/>
+                <TableColumn text="Khách hàng" fx:id="colCustomer"/>
+                <TableColumn text="Xe" fx:id="colCar"/>
+                <TableColumn text="Ngày thuê" fx:id="colRent"/>
+                <TableColumn text="Ngày trả" fx:id="colReturn"/>
+                <TableColumn text="Số ngày" fx:id="colDays"/>
+                <TableColumn text="Tổng tiền" fx:id="colAmount"/>
+                <TableColumn text="Trạng thái" fx:id="colStatus"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

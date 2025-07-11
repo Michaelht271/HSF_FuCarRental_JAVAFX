@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
 
 @Controller
 public class RegisterControllerFX {
+    private static final Logger logger = LoggerFactory.getLogger(RegisterControllerFX.class);
 
     @FXML private TextField nameField;
     @FXML private TextField emailField;
@@ -101,7 +104,7 @@ public class RegisterControllerFX {
         a.setCustomer(c);
         c.setAccount(a);
 
-        customerService.saveCustomerByAdmin(c);
+        customerService.saveCustomer(c);
         emailService.sendOtpVerification(email, otp);
 
         messageLabel.setText("Đăng ký thành công! Vui lòng kiểm tra email để xác minh.");
@@ -118,7 +121,7 @@ public class RegisterControllerFX {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
+           logger.error("Error when loading verify-otp.fxml", e);
         }
 
 
@@ -132,7 +135,7 @@ public class RegisterControllerFX {
             Stage stage = (Stage) nameField.getScene().getWindow();
             stage.getScene().setRoot(loader.load());
         } catch (Exception ex) {
-            ex.printStackTrace();
+           logger.error("Error when loading login.fxml", ex);
         }
     }
 }

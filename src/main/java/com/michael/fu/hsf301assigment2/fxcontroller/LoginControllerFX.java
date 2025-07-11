@@ -73,6 +73,7 @@ public class LoginControllerFX {
             loader.setControllerFactory(context::getBean);
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.getScene().setRoot(loader.load());
+            stage.setTitle("Trang quản trị");
         } catch (Exception e) {
             e.printStackTrace();
         }

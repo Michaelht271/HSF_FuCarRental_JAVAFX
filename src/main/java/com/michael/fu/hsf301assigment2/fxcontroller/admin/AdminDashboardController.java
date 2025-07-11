@@ -2,10 +2,11 @@ package com.michael.fu.hsf301assigment2.fxcontroller.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -58,22 +59,22 @@ public class AdminDashboardController {
     // Handler cho sidebar
     @FXML
     public void goToCustomer() {
-        loadFXML("/fxml/admin/customer-list.fxml");
+        loadFXML("/fxml/admin/customer-management.fxml");
     }
 
     @FXML
     public void goToCar() {
-        loadFXML("/fxml/admin/car-list.fxml");
+        loadFXML("/fxml/admin/car-management.fxml");
     }
 
     @FXML
     public void goToRental() {
-        loadFXML("/fxml/admin/rental-list.fxml");
+        loadFXML("/fxml/admin/rental-management.fxml");
     }
 
     @FXML
     public void goToReport() {
-        loadFXML("/fxml/admin/report.fxml");
+        loadFXML("/fxml/admin/report-view.fxml");
     }
 
     @FXML
@@ -90,15 +91,19 @@ public class AdminDashboardController {
         loadFXML("/fxml/admin/admin-dashboard.fxml");
     }
 
+
+
+    @FXML private BorderPane mainLayout; // Gắn với fx:id trong FXML
+
     private void loadFXML(String path) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             loader.setControllerFactory(context::getBean);
-            Parent root = loader.load();
-            Stage stage = (Stage) lblTotalCustomers.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Parent view = loader.load();
+            mainLayout.setCenter(view);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

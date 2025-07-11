@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.admin.RentalManagementControllerFX">
+
+    <top>
+        <VBox spacing="10" >
+            <padding>
+                <Insets right="20" left="20" top="20" bottom="20"/>
+            </padding>
+            <Label text="Quản lý thuê xe" style="-fx-font-size: 20px; -fx-font-weight: bold"/>
+            <Label text="Quản lý các giao dịch thuê xe trong hệ thống" style="-fx-text-fill: gray"/>
+        </VBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <padding>
+                <Insets right="20" bottom="20" left="20" top="20"/>
+            </padding>
+            <Label text="Trạng thái:"/>
+            <ComboBox fx:id="statusFilter" promptText="Tất cả"/>
+
+            <Label text="Khách hàng:"/>
+            <TextField fx:id="searchField" promptText="Tên hoặc SĐT"/>
+
+            <Label text="Từ ngày:"/>
+            <DatePicker fx:id="fromDatePicker"/>
+
+            <Label text="Đến ngày:"/>
+            <DatePicker fx:id="toDatePicker"/>
+
+            <Button text="Lọc" onAction="#applyFilter"/>
+        </HBox>
+
+    </top>
+
+    <center>
+        <TableView fx:id="rentalTable" prefHeight="600">
+            <columns>
+                <TableColumn fx:id="colIndex" text="STT" prefWidth="50"/>
+                <TableColumn fx:id="colCustomerName" text="Khách hàng" prefWidth="150"/>
+                <TableColumn fx:id="colCustomerPhone" text="SĐT" prefWidth="100"/>
+                <TableColumn fx:id="colCarName" text="Xe" prefWidth="150"/>
+                <TableColumn fx:id="colRentDate" text="Ngày nhận" prefWidth="100"/>
+                <TableColumn fx:id="colReturnDate" text="Ngày trả" prefWidth="100"/>
+                <TableColumn fx:id="colRentPrice" text="Tổng tiền" prefWidth="120"/>
+                <TableColumn fx:id="colStatus" text="Trạng thái" prefWidth="120"/>
+                <TableColumn fx:id="colActions" text="Thao tác" prefWidth="200"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

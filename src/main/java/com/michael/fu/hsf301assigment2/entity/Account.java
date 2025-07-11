@@ -15,7 +15,7 @@ public class Account {
     @Column(name="AccountId")
     private Long accountId;
 
-    @Column(name="AccountName", columnDefinition = "NVARCHAR(20)", nullable = false)
+    @Column(name="AccountName", columnDefinition = "NVARCHAR(50)", nullable = false)
     private String accountName;
 
     @Enumerated(EnumType.STRING)
