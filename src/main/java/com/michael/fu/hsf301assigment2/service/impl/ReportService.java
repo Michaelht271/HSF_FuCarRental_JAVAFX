@@ -7,6 +7,8 @@ import com.michael.fu.hsf301assigment2.entity.CarRentalStatus;
 import com.michael.fu.hsf301assigment2.repository.CarRentalRepository;
 
 import com.michael.fu.hsf301assigment2.service.BaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ReportService extends BaseService {
-
+    Logger logger = LoggerFactory.getLogger(ReportService.class);
     private final CarRentalRepository rentalRepository;
 
     public ReportService(CarRentalRepository rentalRepository) {
@@ -25,7 +27,7 @@ public class ReportService extends BaseService {
     public Map<String, Object> generateReport(LocalDate startDate, LocalDate endDate) {
         List<CarRental> rentals = rentalRepository.findByRentDateBetween(startDate, endDate);
         ReportSummary summary = buildSummary(rentals);
-
+        logger.info("generateReport: summary={}", summary);
         Map<String, Object> data = new HashMap<>();
         data.put("reportData", summary);
         data.put("reportResults", rentals);
