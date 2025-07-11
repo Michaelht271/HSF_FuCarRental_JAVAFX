@@ -62,17 +62,6 @@ Tìm file `MainApplication.java` và chạy bằng Spring Boot context. Đảm b
 
 ---
 
-## 🧪 Một số ảnh minh họa (nếu có)
-
-Bạn có thể thêm thư mục `screenshots/` và đính kèm:
-
-```markdown
-![Dashboard](./screenshots/admin_dashboard.png)
-![Customer View](./screenshots/customer_home.png)
-```
-
----
-
 ## 📜 License
 
 MIT License. Bạn có thể sử dụng và chỉnh sửa cho mục đích học tập và cá nhân.
@@ -82,5 +71,3 @@ MIT License. Bạn có thể sử dụng và chỉnh sửa cho mục đích họ
 ## 👨‍💻 Tác giả
 
 * Michael HT ([@Michaelht271](https://github.com/Michaelht271))
-
-````
