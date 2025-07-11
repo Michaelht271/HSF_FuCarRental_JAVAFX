@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+
 <?import javafx.geometry.*?>
 
 <BorderPane fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.admin.AdminDashboardController"
@@ -10,7 +10,7 @@
 
     <!-- Sidebar -->
     <left>
-        <VBox style="-fx-background-color: #343a40;" spacing="10" prefWidth="220" alignment="TOP_LEFT" padding="10">
+        <VBox style="-fx-background-color: #488fd7;" spacing="10" prefWidth="220" padding="10">
             <Label text="🚗 FU Car Rental" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold"/>
 
             <Button text="Dashboard" prefWidth="200" style="-fx-background-color: transparent; -fx-text-fill: white" onAction="#goToDashboard"/>

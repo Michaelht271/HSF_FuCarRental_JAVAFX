@@ -37,7 +37,7 @@ public class Customer {
     @Column(name = "LinceNumber", columnDefinition = "NVARCHAR(20)")
     private String licenceNumber;
 
-    @Column(name = "Email", columnDefinition = "NVARCHAR(50)")
+    @Column(name = "Email", columnDefinition = "NVARCHAR(100)")
     private String email;
     @Column(name = "otp_code")
     private String otpCode;

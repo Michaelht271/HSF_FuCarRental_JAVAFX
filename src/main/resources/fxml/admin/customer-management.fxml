@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.admin.CustomerManagementControllerFX">
+
+    <!-- Thanh tiêu đề -->
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              style="-fx-background-color: #f5f5f5; -fx-padding: 10;">
+            <Label text="👤 Quản lý khách hàng"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Button text="Thêm khách hàng" onAction="#onShowAddCustomer"
+                    style="-fx-background-color: #007bff; -fx-text-fill: white;"/>
+        </HBox>
+    </top>
+
+    <!-- Bảng danh sách khách hàng -->
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="20" left="20" bottom="20" right="20"/>
+            </padding>
+            <TableView fx:id="customerTable" prefHeight="500">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                    <TableColumn fx:id="colName" text="Họ tên" prefWidth="150"/>
+                    <TableColumn fx:id="colEmail" text="Email" prefWidth="180"/>
+                    <TableColumn fx:id="colPhone" text="SĐT" prefWidth="100"/>
+                    <TableColumn fx:id="colBirthday" text="Ngày sinh" prefWidth="100"/>
+                    <TableColumn fx:id="colIdentify" text="CMND" prefWidth="100"/>
+                    <TableColumn fx:id="colLicense" text="Bằng lái" prefWidth="100"/>
+                    <TableColumn fx:id="colLicenseDate" text="Ngày cấp" prefWidth="100"/>
+                    <TableColumn fx:id="colActions" text="Thao tác" prefWidth="160"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

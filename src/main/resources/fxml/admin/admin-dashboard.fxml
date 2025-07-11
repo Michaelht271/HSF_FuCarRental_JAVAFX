@@ -5,8 +5,9 @@
 <?import javafx.geometry.Insets?>
 
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.admin.AdminDashboardController">
+<BorderPane fx:id="mainLayout"
+            fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.admin.AdminDashboardController"
+            xmlns:fx="http://javafx.com/fxml">
 
     <!-- SIDEBAR -->
     <left>

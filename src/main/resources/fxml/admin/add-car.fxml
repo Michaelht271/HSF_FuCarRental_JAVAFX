@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.admin.AddCarControllerFX"
+            prefWidth="900" prefHeight="750">
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <content>
+                <VBox spacing="12" alignment="TOP_CENTER" style="-fx-padding: 20;"
+                      prefWidth="600" prefHeight="900" maxWidth="Infinity" maxHeight="Infinity">
+
+                    <Label fx:id="formTitle" text="Thêm xe mới"
+                           style="-fx-font-size: 20px; -fx-font-weight: bold"/>
+
+                    <TextField fx:id="carNameField" promptText="Tên xe" maxWidth="400"/>
+                    <TextField fx:id="yearField" promptText="Năm sản xuất" maxWidth="400"/>
+                    <TextField fx:id="colorField" promptText="Màu sắc" maxWidth="400"/>
+                    <TextField fx:id="capacityField" promptText="Số chỗ" maxWidth="400"/>
+                    <TextField fx:id="priceField" promptText="Giá thuê (VNĐ/ngày)" maxWidth="400"/>
+
+                    <ComboBox fx:id="producerComboBox" promptText="Chọn hãng xe" maxWidth="400"/>
+                    <ComboBox fx:id="statusComboBox" promptText="Chọn trạng thái" maxWidth="400"/>
+
+                    <TextArea fx:id="descriptionArea" promptText="Mô tả"
+                              prefRowCount="3" maxWidth="400"/>
+
+                    <HBox spacing="10" alignment="CENTER">
+                        <Button text="Hủy" onAction="#onCancel"
+                                style="-fx-background-color: #dc3545; -fx-text-fill: white;"/>
+                        <Button text="Lưu" onAction="#onSave"
+                                style="-fx-background-color: #28a745; -fx-text-fill: white;"/>
+                    </HBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
