@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml" 
+      spacing="30" alignment="CENTER" 
+      style="-fx-background-color: linear-gradient(to bottom right, #0d47a1, #1976d2, #42a5f5, #e3f2fd); 
+             -fx-padding: 60 40;">
+
+    <!-- Hero Section -->
+    <VBox spacing="20" alignment="CENTER" 
+          style="-fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 25; 
+                 -fx-padding: 50 40; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0, 0, 10);">
+        
+        <!-- Welcome Icon -->
+        <Label text="🚗" style="-fx-font-size: 72px;" />
+        
+        <!-- Main Title -->
+        <Label text="Chào mừng đến với FU Car Rental" 
+               style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #0d47a1; 
+                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);" />
+        
+        <!-- Subtitle -->
+        <Label text="Thuê xe dễ dàng, an toàn và tiện lợi" 
+               style="-fx-font-size: 18px; -fx-text-fill: #263238; -fx-font-style: italic;" />
+        
+        <!-- Divider -->
+        <Region style="-fx-background-color: linear-gradient(to right, transparent, #90caf9, transparent); 
+                       -fx-pref-height: 3; -fx-pref-width: 200;" />
+        
+        <!-- Features Section -->
+        <HBox spacing="40" alignment="CENTER">
+            <VBox spacing="8" alignment="CENTER" style="-fx-padding: 20;">
+                <Label text="⚡" style="-fx-font-size: 28px;" />
+                <Label text="Nhanh chóng" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1976d2;" />
+                <Label text="Đặt xe chỉ trong vài phút" style="-fx-font-size: 12px; -fx-text-fill: #999999;" />
+            </VBox>
+            
+            <VBox spacing="8" alignment="CENTER" style="-fx-padding: 20;">
+                <Label text="🛡️" style="-fx-font-size: 28px;" />
+                <Label text="An toàn" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1976d2;" />
+                <Label text="Xe được bảo dưỡng định kỳ" style="-fx-font-size: 12px; -fx-text-fill: #999999;" />
+            </VBox>
+            
+            <VBox spacing="8" alignment="CENTER" style="-fx-padding: 20;">
+                <Label text="💰" style="-fx-font-size: 28px;" />
+                <Label text="Tiết kiệm" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1976d2;" />
+                <Label text="Giá cả cạnh tranh nhất" style="-fx-font-size: 12px; -fx-text-fill: #999999;" />
+            </VBox>
+        </HBox>
+        
+        <!-- Call to Action Button -->
+        <Button fx:id="btnBrowse" text="🚀 Khám phá xe ngay" 
+                style="-fx-background-color: linear-gradient(to bottom right, #1976d2, #42a5f5); 
+                       -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; 
+                       -fx-background-radius: 30; -fx-padding: 15 40; -fx-cursor: hand;
+                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 4);" 
+                />
+    </VBox>
+    
+    <!-- Secondary Info Section -->
+    <VBox spacing="15" alignment="CENTER" 
+          style="-fx-background-color: rgba(255,255,255,0.9); -fx-background-radius: 20; 
+                 -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+        
+        <Label text="🎯 Tại sao chọn FU Car Rental?" 
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1976d2;" />
+        
+        <HBox spacing="30" alignment="CENTER">
+            <VBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 15;">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="✓" style="-fx-font-size: 16px; -fx-text-fill: #4caf50; -fx-font-weight: bold;" />
+                    <Label text="Đa dạng loại xe" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
+                </HBox>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="✓" style="-fx-font-size: 16px; -fx-text-fill: #4caf50; -fx-font-weight: bold;" />
+                    <Label text="Hỗ trợ 24/7" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
+                </HBox>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="✓" style="-fx-font-size: 16px; -fx-text-fill: #4caf50; -fx-font-weight: bold;" />
+                    <Label text="Không phí ẩn" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
+                </HBox>
+            </VBox>
+            
+            <VBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 15;">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="✓" style="-fx-font-size: 16px; -fx-text-fill: #4caf50; -fx-font-weight: bold;" />
+                    <Label text="Giao nhận tận nơi" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
+                </HBox>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="✓" style="-fx-font-size: 16px; -fx-text-fill: #4caf50; -fx-font-weight: bold;" />
+                    <Label text="Bảo hiểm toàn diện" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
+                </HBox>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="✓" style="-fx-font-size: 16px; -fx-text-fill: #4caf50; -fx-font-weight: bold;" />
+                    <Label text="Thanh toán linh hoạt" style="-fx-font-size: 14px; -fx-text-fill: #333333;" />
+                </HBox>
+            </VBox>
+        </HBox>
+    </VBox>
+    
+    <!-- Footer -->
+    <Label text="© 2024 FU Car Rental - Driving Your Dreams" 
+           style="-fx-font-size: 12px; -fx-text-fill: #0d47a1; -fx-font-style: italic;" />
+</VBox>

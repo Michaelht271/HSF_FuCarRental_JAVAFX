@@ -184,7 +184,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.michael.fu.hsf301Assigment2/com.michael.fu.hsf301assigment2.MainApp</mainClass>
+                    <mainClass>com.michael.fu.hsf301assigment2.MainApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>
