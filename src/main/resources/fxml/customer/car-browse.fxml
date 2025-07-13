@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.customer.CarBrowseControllerFX"
+            style="-fx-background-color: linear-gradient(to bottom, #f0f8ff, #e6f3ff);">
+
+    <!-- Header với gradient xanh đẹp -->
+    <top>
+        <VBox>
+            <!-- Main header -->
+            <HBox spacing="15" alignment="CENTER_LEFT" 
+                  style="-fx-background-color: linear-gradient(to right, #2c5aa0, #3b82f6); 
+                         -fx-padding: 20 25;">
+                <Label text="🚗" style="-fx-font-size: 28px;" />
+                <Label text="Danh sách xe có sẵn" 
+                       style="-fx-font-size: 24px; 
+                              -fx-font-weight: bold; 
+                              -fx-text-fill: white;" />
+            </HBox>
+            
+            <!-- Sub header -->
+            <HBox spacing="10" alignment="CENTER_LEFT" 
+                  style="-fx-background-color: #1e40af; -fx-padding: 10 25;">
+                <Label text="💡 Chọn xe phù hợp với nhu cầu của bạn" 
+                       style="-fx-font-size: 14px; 
+                              -fx-text-fill: #bfdbfe; 
+                              -fx-font-style: italic;" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Main content area -->
+    <center>
+        <VBox spacing="20">
+            <padding>
+                <Insets top="25" right="25" bottom="25" left="25" />
+            </padding>
+            
+            <!-- Search and filter section -->
+            <HBox spacing="15" alignment="CENTER_LEFT" 
+                  style="-fx-background-color: white; 
+                         -fx-padding: 15; 
+                         -fx-background-radius: 10;">
+                <Label text="🔍" style="-fx-font-size: 16px;" />
+                <TextField fx:id="searchField" promptText="Tìm kiếm xe..." prefWidth="200"
+                          style="-fx-background-color: #f8fafc;
+                                 -fx-border-color: #cbd5e1; 
+                                 -fx-border-radius: 5; 
+                                 -fx-background-radius: 5;
+                                 -fx-padding: 8;" />
+                
+                <ComboBox fx:id="producerComboBox" promptText="Chọn hãng xe" prefWidth="140"
+                         style="-fx-background-color: #f8fafc;
+                                -fx-border-color: #cbd5e1; 
+                                -fx-border-radius: 5; 
+                                -fx-background-radius: 5;" />
+                
+                <Button fx:id="filterButton" text="Lọc" onAction="#handleFilter"
+                style="-fx-background-color: #3b82f6;
+                                -fx-text-fill: white; 
+                                -fx-font-weight: bold; 
+                                -fx-padding: 8 16; 
+                                -fx-background-radius: 5;" />
+            </HBox>
+            
+            <!-- Table container -->
+            <VBox spacing="0" 
+                  style="-fx-background-color: white; 
+                         -fx-background-radius: 12;">
+                
+                <!-- Table header -->
+                <HBox spacing="0" alignment="CENTER_LEFT" 
+                      style="-fx-background-color: linear-gradient(to right, #1e40af, #3b82f6); 
+                             -fx-padding: 15; 
+                             -fx-background-radius: 12 12 0 0;">
+                    <Label text="📋 Thông tin chi tiết các xe" 
+                           style="-fx-font-size: 16px; 
+                                  -fx-font-weight: bold; 
+                                  -fx-text-fill: white;" />
+                </HBox>
+                
+                <!-- Table -->
+                <TableView fx:id="carTable" prefHeight="450"
+                          style="-fx-background-color: white; 
+                                 -fx-table-cell-border-color: #e2e8f0;
+                                 -fx-background-radius: 0 0 12 12;">
+                    <columns>
+                        <TableColumn text="Tên xe" fx:id="colName" prefWidth="160" />
+                        <TableColumn text="Năm SX" fx:id="colYear" prefWidth="90" />
+                        <TableColumn text="Màu sắc" fx:id="colColor" prefWidth="100" />
+                        <TableColumn text="Số chỗ" fx:id="colCapacity" prefWidth="90" />
+                        <TableColumn text="Hãng xe" fx:id="colProducer" prefWidth="140" />
+                        <TableColumn text="Giá/ngày (VNĐ)" fx:id="colPrice" prefWidth="130" />
+                        <TableColumn text="Thao tác" fx:id="colActions" prefWidth="140" />
+                    </columns>
+                </TableView>
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>

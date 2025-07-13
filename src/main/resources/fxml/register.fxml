@@ -4,89 +4,278 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.RegisterControllerFX"
-            prefWidth="500" prefHeight="600">
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.michael.fu.hsf301assigment2.fxcontroller.RegisterControllerFX"
+           style="-fx-background-color: linear-gradient(to bottom, #4a90e2, #357abd);"
+           prefWidth="600" prefHeight="800">
 
-    <children>
-        <VBox AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
-              AnchorPane.rightAnchor="20" spacing="15" alignment="TOP_CENTER">
+    <!-- Container chính với hiệu ứng đổ bóng -->
+    <VBox alignment="CENTER" spacing="20" maxWidth="480" maxHeight="750"
+          style="-fx-background-color: white;
+                 -fx-background-radius: 20;
+                 -fx-effect: dropshadow(gaussian, #34495e, 15, 0.2, 0, 5);">
 
-            <Label text="Đăng ký tài khoản" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <padding>
+            <Insets top="30" right="40" bottom="30" left="40"/>
+        </padding>
 
-            <GridPane hgap="10" vgap="10" maxWidth="450">
-                <columnConstraints>
-                    <ColumnConstraints percentWidth="30" halignment="RIGHT"/>
-                    <ColumnConstraints percentWidth="70" hgrow="ALWAYS"/>
-                </columnConstraints>
+        <!-- Header với icon và tiêu đề -->
+        <VBox alignment="CENTER" spacing="10">
+            <!-- Icon đăng ký -->
+            <Label text="👤" style="-fx-font-size: 36px;"/>
+            
+            <!-- Tiêu đề chính -->
+            <Label text="Đăng ký tài khoản"
+                   style="-fx-font-size: 28px; 
+                          -fx-font-weight: bold; 
+                          -fx-text-fill: #2c3e50;
+                          -fx-font-family: 'Segoe UI';"/>
+            
+            <!-- Subtitle -->
+            <Label text="Tạo tài khoản mới để bắt đầu"
+                   style="-fx-font-size: 14px; 
+                          -fx-text-fill: #7f8c8d;
+                          -fx-font-family: 'Segoe UI';"/>
+        </VBox>
 
-                <!-- Họ tên -->
-                <Label text="Họ và tên:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="nameField"
-                           promptText="Nhập họ và tên"
-                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <!-- Scroll pane cho form -->
+        <ScrollPane fitToWidth="true" fitToHeight="true" 
+                    style="-fx-background-color: transparent; -fx-background: transparent;"
+                    vbarPolicy="AS_NEEDED" hbarPolicy="NEVER">
+            
+            <!-- Form fields -->
+            <VBox spacing="18" maxWidth="400">
+                
+                <!-- Họ và tên -->
+                <VBox spacing="6">
+                    <Label text="Họ và tên *"
+                           style="-fx-text-fill: #34495e; 
+                                  -fx-font-weight: 600;
+                                  -fx-font-size: 14px;
+                                  -fx-font-family: 'Segoe UI';"/>
+                    <TextField fx:id="nameField"
+                               promptText="Nhập họ và tên đầy đủ"
+                               prefHeight="40"
+                               style="-fx-background-color: #f8f9fa;
+                                      -fx-border-color: #e9ecef;
+                                      -fx-border-width: 2;
+                                      -fx-border-radius: 8;
+                                      -fx-background-radius: 8;
+                                      -fx-padding: 10;
+                                      -fx-font-size: 14px;
+                                      -fx-font-family: 'Segoe UI';
+                                      -fx-prompt-text-fill: #adb5bd;"/>
+                </VBox>
 
                 <!-- Email -->
-                <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="emailField"
-                           promptText="Nhập email"
-                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <VBox spacing="6">
+                    <Label text="Email *"
+                           style="-fx-text-fill: #34495e; 
+                                  -fx-font-weight: 600;
+                                  -fx-font-size: 14px;
+                                  -fx-font-family: 'Segoe UI';"/>
+                    <TextField fx:id="emailField"
+                               promptText="example@email.com"
+                               prefHeight="40"
+                               style="-fx-background-color: #f8f9fa;
+                                      -fx-border-color: #e9ecef;
+                                      -fx-border-width: 2;
+                                      -fx-border-radius: 8;
+                                      -fx-background-radius: 8;
+                                      -fx-padding: 10;
+                                      -fx-font-size: 14px;
+                                      -fx-font-family: 'Segoe UI';
+                                      -fx-prompt-text-fill: #adb5bd;"/>
+                </VBox>
 
-                <!-- SĐT -->
-                <Label text="SĐT:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <TextField fx:id="mobileField"
-                           promptText="Nhập số điện thoại"
-                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <!-- Số điện thoại -->
+                <VBox spacing="6">
+                    <Label text="Số điện thoại *"
+                           style="-fx-text-fill: #34495e; 
+                                  -fx-font-weight: 600;
+                                  -fx-font-size: 14px;
+                                  -fx-font-family: 'Segoe UI';"/>
+                    <TextField fx:id="mobileField"
+                               promptText="0123456789"
+                               prefHeight="40"
+                               style="-fx-background-color: #f8f9fa;
+                                      -fx-border-color: #e9ecef;
+                                      -fx-border-width: 2;
+                                      -fx-border-radius: 8;
+                                      -fx-background-radius: 8;
+                                      -fx-padding: 10;
+                                      -fx-font-size: 14px;
+                                      -fx-font-family: 'Segoe UI';
+                                      -fx-prompt-text-fill: #adb5bd;"/>
+                </VBox>
 
                 <!-- Ngày sinh -->
-                <Label text="Ngày sinh:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <DatePicker fx:id="birthdayPicker"
-                            GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <VBox spacing="6">
+                    <Label text="Ngày sinh *"
+                           style="-fx-text-fill: #34495e; 
+                                  -fx-font-weight: 600;
+                                  -fx-font-size: 14px;
+                                  -fx-font-family: 'Segoe UI';"/>
+                    <DatePicker fx:id="birthdayPicker"
+                                prefHeight="40"
+                                style="-fx-background-color: #f8f9fa;
+                                       -fx-border-color: #e9ecef;
+                                       -fx-border-width: 2;
+                                       -fx-border-radius: 8;
+                                       -fx-background-radius: 8;
+                                       -fx-font-size: 14px;
+                                       -fx-font-family: 'Segoe UI';"/>
+                </VBox>
 
                 <!-- CMND/CCCD -->
-                <Label text="CMND/CCCD:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <TextField fx:id="identityField"
-                           promptText="Nhập CMND/CCCD"
-                           GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <VBox spacing="6">
+                    <Label text="CMND/CCCD *"
+                           style="-fx-text-fill: #34495e; 
+                                  -fx-font-weight: 600;
+                                  -fx-font-size: 14px;
+                                  -fx-font-family: 'Segoe UI';"/>
+                    <TextField fx:id="identityField"
+                               promptText="Nhập số CMND/CCCD"
+                               prefHeight="40"
+                               style="-fx-background-color: #f8f9fa;
+                                      -fx-border-color: #e9ecef;
+                                      -fx-border-width: 2;
+                                      -fx-border-radius: 8;
+                                      -fx-background-radius: 8;
+                                      -fx-padding: 10;
+                                      -fx-font-size: 14px;
+                                      -fx-font-family: 'Segoe UI';
+                                      -fx-prompt-text-fill: #adb5bd;"/>
+                </VBox>
 
                 <!-- Bằng lái -->
-                <Label text="Bằng lái:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                <TextField fx:id="licenceField"
-                           promptText="Nhập số bằng lái"
-                           GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                <VBox spacing="6">
+                    <Label text="Bằng lái xe"
+                           style="-fx-text-fill: #34495e; 
+                                  -fx-font-weight: 600;
+                                  -fx-font-size: 14px;
+                                  -fx-font-family: 'Segoe UI';"/>
+                    <TextField fx:id="licenceField"
+                               promptText="Nhập số bằng lái (không bắt buộc)"
+                               prefHeight="40"
+                               style="-fx-background-color: #f8f9fa;
+                                      -fx-border-color: #e9ecef;
+                                      -fx-border-width: 2;
+                                      -fx-border-radius: 8;
+                                      -fx-background-radius: 8;
+                                      -fx-padding: 10;
+                                      -fx-font-size: 14px;
+                                      -fx-font-family: 'Segoe UI';
+                                      -fx-prompt-text-fill: #adb5bd;"/>
+                </VBox>
 
-                <!-- Ngày cấp -->
-                <Label text="Ngày cấp:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                <DatePicker fx:id="licenceDatePicker"
-                            GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                <!-- Ngày cấp bằng lái -->
+                <VBox spacing="6">
+                    <Label text="Ngày cấp bằng lái"
+                           style="-fx-text-fill: #34495e; 
+                                  -fx-font-weight: 600;
+                                  -fx-font-size: 14px;
+                                  -fx-font-family: 'Segoe UI';"/>
+                    <DatePicker fx:id="licenceDatePicker"
+                                prefHeight="40"
+                                style="-fx-background-color: #f8f9fa;
+                                       -fx-border-color: #e9ecef;
+                                       -fx-border-width: 2;
+                                       -fx-border-radius: 8;
+                                       -fx-background-radius: 8;
+                                       -fx-font-size: 14px;
+                                       -fx-font-family: 'Segoe UI';"/>
+                </VBox>
 
                 <!-- Mật khẩu -->
-                <Label text="Mật khẩu:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="passwordField"
-                               promptText="Tối thiểu 6 ký tự"
-                               GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                <VBox spacing="6">
+                    <Label text="Mật khẩu *"
+                           style="-fx-text-fill: #34495e; 
+                                  -fx-font-weight: 600;
+                                  -fx-font-size: 14px;
+                                  -fx-font-family: 'Segoe UI';"/>
+                    <PasswordField fx:id="passwordField"
+                                   promptText="Tối thiểu 6 ký tự"
+                                   prefHeight="40"
+                                   style="-fx-background-color: #f8f9fa;
+                                          -fx-border-color: #e9ecef;
+                                          -fx-border-width: 2;
+                                          -fx-border-radius: 8;
+                                          -fx-background-radius: 8;
+                                          -fx-padding: 10;
+                                          -fx-font-size: 14px;
+                                          -fx-font-family: 'Segoe UI';
+                                          -fx-prompt-text-fill: #adb5bd;"/>
+                </VBox>
 
                 <!-- Xác nhận mật khẩu -->
-                <Label text="Xác nhận:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="confirmField"
-                               promptText="Nhập lại mật khẩu"
-                               GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-            </GridPane>
+                <VBox spacing="6">
+                    <Label text="Xác nhận mật khẩu *"
+                           style="-fx-text-fill: #34495e; 
+                                  -fx-font-weight: 600;
+                                  -fx-font-size: 14px;
+                                  -fx-font-family: 'Segoe UI';"/>
+                    <PasswordField fx:id="confirmField"
+                                   promptText="Nhập lại mật khẩu"
+                                   prefHeight="40"
+                                   style="-fx-background-color: #f8f9fa;
+                                          -fx-border-color: #e9ecef;
+                                          -fx-border-width: 2;
+                                          -fx-border-radius: 8;
+                                          -fx-background-radius: 8;
+                                          -fx-padding: 10;
+                                          -fx-font-size: 14px;
+                                          -fx-font-family: 'Segoe UI';
+                                          -fx-prompt-text-fill: #adb5bd;"/>
+                </VBox>
+            </VBox>
+        </ScrollPane>
 
-            <!-- Thông báo lỗi / thông báo thành công -->
-            <Label fx:id="messageLabel"
-                   wrapText="true" textFill="red" maxWidth="450"/>
+        <!-- Message label -->
+        <Label fx:id="messageLabel"
+               textFill="#e74c3c"
+               visible="false"
+               wrapText="true"
+               maxWidth="400"
+               style="-fx-font-style: italic;
+                      -fx-font-size: 13px;
+                      -fx-background-color: rgba(231, 76, 60, 0.1);
+                      -fx-background-radius: 5;
+                      -fx-padding: 8;
+                      -fx-font-family: 'Segoe UI';"/>
 
-            <!-- Nút đăng ký -->
-            <Button text="Đăng ký"
+        <!-- Buttons -->
+        <VBox spacing="15" alignment="CENTER">
+            <!-- Register button -->
+            <Button text="Đăng ký tài khoản"
                     onAction="#handleRegister"
-                    maxWidth="120"
-                    style="-fx-background-color: linear-gradient(#6db3f2,#1e69de);-fx-text-fill:white;"/>
+                    maxWidth="300"
+                    minWidth="300"
+                    prefHeight="50"
+                    style="-fx-background-color: linear-gradient(to bottom, #3498db, #2980b9);
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;
+                           -fx-font-size: 16px;
+                           -fx-background-radius: 25;
+                           -fx-cursor: hand;
+                           -fx-font-family: 'Segoe UI';
+                           -fx-effect: dropshadow(gaussian, #3498db, 8, 0.3, 0, 2);"/>
 
-            <!-- Link quay về login -->
-            <Hyperlink text="← Quay về Đăng nhập"
-                       onAction="#goToLogin"/>
+            <!-- Back to login link -->
+            <HBox alignment="CENTER" spacing="5">
+                <Label text="Đã có tài khoản?"
+                       style="-fx-text-fill: #7f8c8d;
+                              -fx-font-size: 14px;
+                              -fx-font-family: 'Segoe UI';"/>
+                <Hyperlink text="Đăng nhập ngay"
+                           onAction="#goToLogin"
+                           style="-fx-text-fill: #3498db;
+                                  -fx-font-weight: bold;
+                                  -fx-font-size: 14px;
+                                  -fx-font-family: 'Segoe UI';
+                                  -fx-underline: false;"/>
+            </HBox>
         </VBox>
-    </children>
-</AnchorPane>
+    </VBox>
+</StackPane>

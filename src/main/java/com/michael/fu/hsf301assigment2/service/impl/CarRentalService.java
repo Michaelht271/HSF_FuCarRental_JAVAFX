@@ -39,13 +39,17 @@ public class CarRentalService extends BaseService {
         // Kiểm tra xe đang được thuê không
         validateCarAvailability(car, pickupDate);
 
+        // Tính số ngày thuê (bao gồm cả ngày nhận và trả)
+        long days = java.time.temporal.ChronoUnit.DAYS.between(pickupDate, returnDate) + 1;
+        double totalPrice = car.getRentPrice() * days;
+
         // Lưu đơn thuê xe
         CarRental carRental = new CarRental();
         carRental.setCustomer(customer);
         carRental.setCar(car);
         carRental.setRentDate(pickupDate);
         carRental.setReturnDate(returnDate);
-        carRental.setRentPrice(request.getRentPrice());
+        carRental.setRentPrice(totalPrice);
         carRental.setStatus(CarRentalStatus.PENDING);
 
         carRentalRepository.save(carRental);
