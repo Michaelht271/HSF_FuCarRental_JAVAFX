@@ -11,7 +11,7 @@
 
     <!-- SIDEBAR -->
     <left>
-        <VBox spacing="10" prefWidth="220" style="-fx-background-color: #343a40;" >
+        <VBox spacing="10" prefWidth="220" style="-fx-background-color: #4187cf;" >
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>

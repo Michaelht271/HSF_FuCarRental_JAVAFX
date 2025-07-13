@@ -1,10 +1,12 @@
 package com.michael.fu.hsf301assigment2.fxcontroller.admin;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,8 +84,24 @@ public class AdminDashboardController {
 
     @FXML
     public void logout() {
-        loadFXML("/fxml/login.fxml");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+            loader.setControllerFactory(context::getBean);
+            Parent loginRoot = loader.load();
+
+            // Lấy Stage từ mainLayout
+            Stage stage = (Stage) mainLayout.getScene().getWindow();
+
+            // Set scene mới
+            Scene scene = new Scene(loginRoot, 800, 1000);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {
+            logger.error("Logout failed: {}", e.getMessage());
+        }
     }
+
     @FXML
     public void goToDashboard() {
         loadFXML("/fxml/admin/admin-dashboard.fxml");
